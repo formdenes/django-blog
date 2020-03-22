@@ -10,6 +10,7 @@ urlpatterns = [
     re_path(r'^accounts/', include('accounts.urls')),
     re_path(r'^articles/', include('articles.urls')),
     re_path(r'^ors/', include('ors.urls')),
+    re_path(r'^kihivasok/', include('kihivasok.urls')),
     re_path(r'^about/$',views.about),
     re_path(r'^$',views.index)
 ]

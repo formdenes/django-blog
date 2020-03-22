@@ -1,0 +1,22 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h2>Kihívások listája</h2>
+<div class="challenges">
+    {% for ch in challenge %}
+    <div class="ch-card">
+        <div class="logo"><img src="{{ch.thumb.url}}" alt="thumbnail-img"></div>
+        <div class="details">
+            <h4 class="ch-title">{{ch.name}}</h4>
+            <p class="ch-desc">{{ch.snippet}}</p>
+            <p class="ch-tags">
+                {% for t in ch.tags.all %}
+                    <span class="ch-tag">#{{t}}</span>  
+                {% endfor %}
+            </p>
+            <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
