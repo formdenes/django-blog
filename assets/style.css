@@ -10,6 +10,7 @@ body{
     background-repeat: no-repeat;
     padding-left: 1rem;
     padding-top: 1rem;
+    overflow: auto;
 }
 
 body *{
@@ -54,4 +55,11 @@ nav ul li{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 1rem;
     cursor: pointer;
+}
+
+.groups{
+    background-color: white;
+    color: black;
+    padding: 1rem;
+    margin-top: 2rem;
 }
