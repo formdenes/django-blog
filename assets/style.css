@@ -8,6 +8,8 @@ body{
     background-color: #0f121f;
     background-image: url(stars.png);
     background-repeat: no-repeat;
+    padding-left: 1rem;
+    padding-top: 1rem;
 }
 
 body *{
@@ -22,4 +24,34 @@ h1, h2, h3, h4, h5{
 a, a:hover, a:visited{
     text-decoration: none;
     color: white;
+}
+
+nav{
+    display: block;
+    position: absolute;
+    top:0;
+    right: 0;
+    transform: translate(-10px,0px);
+}
+
+nav ul{
+    list-style: none;
+    display: flex;
+}
+
+nav ul li{
+    margin-right: 1rem;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: .3rem;
+    cursor: pointer;
+}
+
+.logout{
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1rem;
+    cursor: pointer;
 }
