@@ -6,7 +6,8 @@ html, body{
 body{
     color: white;
     background-color: #0f121f;
-    background-image: url(stars.png);
+    background-image: url(bg.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
     padding-left: 1rem;
     padding-top: 1rem;
@@ -25,6 +26,10 @@ h1, h2, h3, h4, h5{
 a, a:hover, a:visited{
     text-decoration: none;
     color: white;
+}
+
+#page-logo{
+    height: 50px;
 }
 
 nav{
