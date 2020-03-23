@@ -1,0 +1,12 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="create-article">
+    <h2>Új kihívás létrehozása</h2>
+    <form action="{% url 'challenge:create'%}" class="site-form" method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{form}}
+        <button type="submit" value="create">Létrehozás</button>
+    </form>
+</div>
+{% endblock %}
