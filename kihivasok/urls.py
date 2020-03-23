@@ -1,8 +1,8 @@
-from django.urls import include, re_path
+from django.urls import include, re_path, path
 from . import views
 
 app_name = 'challenge'
 
 urlpatterns = [
-    re_path(r'^$', views.challenge_list, name='challengelist'),
+    path('*', views.challenge_list, name='challengelist'),
 ]
