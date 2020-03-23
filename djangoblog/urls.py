@@ -12,7 +12,7 @@ urlpatterns = [
     re_path(r'^ors/', include('ors.urls')),
     re_path(r'^kihivasok/', include('kihivasok.urls')),
     re_path(r'^about/$',views.about),
-    re_path(r'^$',views.index)
+    re_path(r'^$',include('kihivasok.urls'))
 ]
 
 urlpatterns += staticfiles_urlpatterns()
