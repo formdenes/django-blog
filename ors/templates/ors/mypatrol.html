@@ -1,0 +1,13 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h2>Őrsöm</h2>
+<div class="groups">
+    <h3>{{patrol.0.name}} őrs</h3>
+    <ul>
+        {% for m in members %}
+            <li>{{m.nickname}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

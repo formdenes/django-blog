@@ -9,3 +9,10 @@ def ors_tagok(request):
     groups = Group.objects.all().order_by('number')
     members = Patrolmember.objects.all()
     return render(request, 'ors/ors_tagok.html',{'patrols':patrols, 'groups':groups,'members':members})
+
+@login_required(login_url='/accounts/login')
+def ors_mypatrol(request):
+    current_user = request.user
+    patrol = Patrol.objects.filter(group_leader=current_user)
+    members = Patrolmember.objects.filter(patrol = patrol[0])
+    return render(request, 'ors/mypatrol.html',{'patrol': patrol, 'members':members})

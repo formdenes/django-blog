@@ -1,8 +1,9 @@
-from django.urls import include, re_path
+from django.urls import include, re_path, path
 from . import views
 
 app_name = 'ors'
 
 urlpatterns = [
-    re_path(r'^$', views.ors_tagok, name='taglista'),
+    path('mypatrol/', views.ors_mypatrol, name='mypatrol'),
+    path('', views.ors_tagok, name='taglista'),
 ]
