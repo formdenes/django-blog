@@ -11,6 +11,12 @@ def challenge_list(request):
     # tags = Challenge.tags()
     return render(request, 'kihivasok/challenge_list.html', {'challenge':ch})
 
+@login_required(login_url='/accounts/login')
+def challenge_mylist(request):
+    current_user = request.user
+    ch = Challenge.objects.filter(created_by = current_user)
+    return render(request, 'kihivasok/challenge_mylist.html', {'challenge':ch})
+
 @login_required(login_url="/accounts/login")
 def challenge_create(request):
     if request.method == 'POST':
