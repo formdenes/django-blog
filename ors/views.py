@@ -10,6 +10,11 @@ def ors_tagok(request):
     members = Patrolmember.objects.all()
     return render(request, 'ors/ors_tagok.html',{'patrols':patrols, 'groups':groups,'members':members})
 
+def ors_challenge_list(request):
+    patrols = Patrol.objects.all()
+    members = Patrolmember.objects.all()
+    return render(request, 'orsok.html',{'patrols':patrols, 'members':members})
+
 @login_required(login_url='/accounts/login')
 def ors_mypatrol(request):
     current_user = request.user

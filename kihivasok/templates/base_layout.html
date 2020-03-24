@@ -26,6 +26,7 @@
                 <li><a href="{%url 'challenge:create'%}">Új Kihívás!</a></li>
                 <li><a href="{%url 'challenge:mylist'%}">Saját kihívásaim</a></li>
                 {% else %}
+                <li><a href="{% url 'ors:status'%}">Őrsöm gyűjteménye</a></li>
                 <li><a href="{% url 'accounts:login'%}">Bejelentkezem</a></li>
                 <li><a href="{% url 'accounts:signup'%}">Regisztrálok</a></li>
                 {% endif %}

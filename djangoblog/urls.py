@@ -5,12 +5,14 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from django.conf import settings
 from kihivasok import views as kihivasok_views
+from ors import views as ors_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^accounts/', include('accounts.urls', namespace='accounts')),
     re_path(r'^articles/', include('articles.urls', namespace='articles')),
     re_path(r'^ors/', include('ors.urls', namespace='ors')),
+    # path('status/', ors_views.ors_challenge_list, name='status'),
     re_path(r'^kihivasok/', include('kihivasok.urls', namespace='challenge')),
     path('about/',views.about),
     path('',kihivasok_views.challenge_list, name='home')
