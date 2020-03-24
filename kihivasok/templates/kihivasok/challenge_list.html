@@ -4,7 +4,7 @@
 <h2>Kihívások listája</h2>
 <div class="challenges">
     {% for ch in challenge %}
-        {% if forloop.counter0|divisibleby:'4' %}
+        {% if forloop.counter0|divisibleby:'3' %}
             <div class="row">
         {% endif %}
         <div class="ch-card">
@@ -20,7 +20,7 @@
                 <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
             </div>
         </div>
-        {% if forloop.counter > 3 and forloop.counter|divisibleby:'4' %}
+        {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
             </div>
         {% endif %}
     {% endfor %}

@@ -19,12 +19,8 @@ def challenge_create(request):
             #save article to db
             instance = form.save(commit=False)
             instance.created_by = request.user
-            name = form.cleaned_data['name']
-            instance = Challenge(name=name)
-            cimkek = form.cleaned_data['cimkek']
-            for tag in cimkek:
-                instance.tags.add(tag)
             instance.save()
+            form.save_m2m()
             return redirect('challenge:challengelist')
     else:
         form = forms.CreateChallenge()

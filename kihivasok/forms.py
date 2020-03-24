@@ -3,7 +3,7 @@ from . import models
 from taggit.forms import *
 
 class CreateChallenge(forms.ModelForm):
-    cimkek = TagField()
+    # cimkek = TagField()
     class Meta:
         model = models.Challenge
-        fields = ['name', 'desc', 'promoted', 'thumb']
+        fields = ['name', 'desc', 'thumb', 'promoted', 'tags']
