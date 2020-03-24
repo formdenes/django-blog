@@ -1,0 +1,12 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h2>Megkeresem az őrsömet:</h2>
+<form action="{% url 'ors:ors_search'%}" class="site-form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" value="search">Keresés</button> 
+</form>
+    <!-- <label for="orsititok">Őrsi titok:</label>
+    <input type="password" name="orsititok" id="pw"> -->
+{% endblock %}

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import Patrol, Group, Patrolmember
 from django.contrib.auth.decorators import login_required
-#from . import forms
+from . import forms
+from .forms import SearchPatrol
 
 # Create your views here.
 def ors_tagok(request):
@@ -21,3 +23,23 @@ def ors_mypatrol(request):
     patrol = Patrol.objects.filter(group_leader=current_user)
     members = Patrolmember.objects.filter(patrol = patrol[0])
     return render(request, 'ors/mypatrol.html',{'patrol': patrol, 'members':members})
+
+def ors_collection(request):
+    return 'ide kellene egy jelszó, majd egy kilistázás'
+
+@login_required(login_url="/accounts/login")
+def ors_search(request):
+    if request.method == 'POST':
+        form = forms.SearchPatrol(request.POST)
+        if form.is_valid():
+            group = form.cleaned_data['group_number']
+            patrol = form.cleaned_data['patrol_name']
+            ret_group = Group.objects.filter(number=group)
+            ret_patrol = Patrol.objects.filter(group_num = ret_group,name=patrol)
+            return render (request, "orsok.html", {'gr_num':ret_group, 'p_name':ret_patrol})
+            # return redirect('ors:collection')
+        else:
+            return HttpResponse('Hibás adatok!')
+    else:
+        form = SearchPatrol()
+    return render(request, 'orsok.html', {'form': form})
