@@ -1,0 +1,18 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h2>Megkeresem az őrsömet:</h2>
+<form action="{% url 'status'%}" class="site-form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" value="search">Keresés</button> 
+    <p>{{message_search}}</p>
+</form>
+<!-- patrol-secret form show only if pwform is visible -> JS solution needed -->
+<form action="{% url 'patrol_collection'%}" class="patrol-secret" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{pwform}}
+    <button type="submit" value="password">OK</button>
+    <p>{{message_pw}}</p>
+</form>
+{% endblock %}

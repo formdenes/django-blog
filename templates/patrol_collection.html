@@ -1,0 +1,10 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h2>{{patrol}} őrs gyűjteménye</h2>
+<ul>
+    {% for m in members %}
+        <li>{{m.nickname}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
