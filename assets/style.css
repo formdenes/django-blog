@@ -162,3 +162,14 @@ nav ul li{
 .ch-author{
     bottom: 0;
 }
+
+section.news, section.latest-challenges, section.top-challenges{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+section h2{
+    margin: 2rem 0;
+}

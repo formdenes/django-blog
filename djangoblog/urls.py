@@ -17,7 +17,7 @@ urlpatterns = [
     re_path(r'^kihivasok/', include('kihivasok.urls', namespace='challenge')),
     path('rolunk/',views.about),
     path('kereses/',kihivasok_views.kereses, name='search'),
-    path('',kihivasok_views.challenge_list, name='home')
+    path('',kihivasok_views.index, name='home')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

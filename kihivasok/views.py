@@ -47,4 +47,9 @@ def kereses(request):
         form = forms.SearchChallenge()
     return render(request, "search_challenge.html", {'form':form})
 
+def index(request):
+    latest_challenges = Challenge.objects.filter(promoted = True).order_by('-timestamp')[:3]
+    top_challenges = Challenge.objects.filter(promoted = True).order_by('timestamp')[:3]
+    return render(request, 'kihivasok/index.html', {'latest_challenges':latest_challenges, 'top_challenges':top_challenges})
+
 
