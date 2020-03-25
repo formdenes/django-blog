@@ -16,5 +16,7 @@ class Challenge(models.Model):
         return self.name
 
     def snippet(self):
+        if len(self.desc) <200:
+            return self.desc
         return self.desc[:200] + "..."
 
