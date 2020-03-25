@@ -7,3 +7,6 @@ class CreateChallenge(forms.ModelForm):
     class Meta:
         model = models.Challenge
         fields = ['name', 'desc', 'thumb', 'promoted', 'tags']
+
+class SearchChallenge(forms.Form):
+    search_text = forms.CharField(label='Keresés',max_length=30)

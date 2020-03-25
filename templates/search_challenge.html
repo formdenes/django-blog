@@ -1,0 +1,36 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h2>Megkeresem az őrsömet:</h2>
+<form action="{% url 'search'%}" class="site-form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" value="search">Keresés</button>
+    <p>{{message}}</p>
+</form>
+<div class="search-results">
+    <div class="challenges">
+        {% for ch in results %}
+        {% if forloop.counter0|divisibleby:'3' %}
+        <div class="row">
+            {% endif %}
+            <div class="ch-card">
+                <div class="logo"><img src="{{ch.thumb.url}}" alt="thumbnail-img"></div>
+                <div class="details">
+                    <h4 class="ch-title">{{ch.name}}</h4>
+                    <p class="ch-desc">{{ch.snippet}}</p>
+                    <p class="ch-tags">
+                        {% for t in ch.tags.all %}
+                        <span class="ch-tag">#{{t}}</span>
+                        {% endfor %}
+                    </p>
+                    <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
+                </div>
+            </div>
+            {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

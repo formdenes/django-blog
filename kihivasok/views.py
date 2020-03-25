@@ -31,3 +31,20 @@ def challenge_create(request):
     else:
         form = forms.CreateChallenge()
     return render(request, 'kihivasok/challenge_create.html', {'form': form})
+
+def kereses(request):
+    if request.method == "POST":
+        form = forms.SearchChallenge(request.POST)
+        if form.is_valid():
+            tags = form.cleaned_data['search_text']
+            tags = tags.split()
+            results = Challenge.objects.filter(tags__name__in=tags).distinct()
+            return render(request,"search_challenge.html", {'form':form, 'results':results})
+        else:
+            message: "Hibás keresés"
+            return render(request, "search_challenge.html",{'form':form, 'message':message})
+    else:
+        form = forms.SearchChallenge()
+    return render(request, "search_challenge.html", {'form':form})
+
+
