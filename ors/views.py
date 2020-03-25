@@ -57,7 +57,7 @@ def ors_status(request):
                 try:
                     ret_patrol = Patrol.objects.get(group_num=ret_group, name=patrol)
                 except:
-                    message = "Ebből a csapatból ez az őrs még nem rigsztrált az oldalra!"
+                    message = "Ebből a csapatból ez az őrs még nem regisztrált az oldalra!"
                     return render(request, "patrol_search.html", {'form': form, 'message_search': message})
                 if ret_patrol:
                     pwform = forms.EnterPassword({'group':ret_group.number, 'patrol':ret_patrol.name})
