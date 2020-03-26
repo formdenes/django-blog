@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponse
 from .models import Patrol, Group, Patrolmember
+from django.db import transaction, IntegrityError
 from django.contrib.auth.decorators import login_required
 from . import forms
 from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet
@@ -56,16 +58,38 @@ def ors_editpatrolmembers(request):
     current_user = request.user
     patrol = Patrol.objects.filter(group_leader=current_user)
     patrol = patrol[0]
-    members = Patrolmember.objects.filter(patrol=patrol).order_by('nickname')
+    members = Patrolmember.objects.filter(patrol=patrol)
     if  request.method == 'POST':
-        form_members = forms.EditPatrolmembers(request.POST)
+        form_members = member_formset(request.POST)
         if form_members.is_valid():
-            pass
+            patrol_members = []
+            existing_nicknames = []
+            for member_form in form_members:
+                nickname = member_form.cleaned_data.get('nickname')
+                to_delete = member_form.cleaned_data.get('DELETE') 
+                if nickname and not to_delete:
+                    if nickname in existing_nicknames:
+                        error_message = 'Nem szerepelhet két egyforma nevű őrstag!'
+                        return render(request, 'ors/editpatrolmembers.html', {'form_members': form_members, 'error': error_message})
+                    existing_nicknames.append(nickname)
+                    patrol_members.append(Patrolmember(patrol=patrol, nickname=nickname))                    
+            try:
+                with transaction.atomic():
+                    Patrolmember.objects.filter(patrol=patrol).delete()
+                    Patrolmember.objects.bulk_create(patrol_members)
+                    members = Patrolmember.objects.filter(patrol=patrol).order_by('nickname')
+                    form_members = member_formset(initial=members.values())
+                    return render(request, 'ors/editpatrolmembers.html', {'form_members':form_members})
+            except IntegrityError:
+                messages.error(request,'Sajnos valami hiba történt!')
+                return render(request, 'ors/editpatrolmembers.html', {'form_members':form_members})
+        else:
+            error_message = form_members.errors
+            return render(request,'ors/editpatrolmembers.html', {'form_members':form_members, 'error':error_message})
     else:
         form_members = member_formset(initial=members.values())
     return render(request, 'ors/editpatrolmembers.html', {'form_members':form_members})
     
-
 def ors_patrol_collection(request):
     if request.method == 'POST':
         form = forms.EnterPassword(request.POST)

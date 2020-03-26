@@ -23,5 +23,8 @@ class Patrolmember(models.Model):
     nickname = models.CharField(max_length=50)
     patrol = models.ForeignKey(Patrol, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ('nickname', 'patrol')
+
     def __str__(self):
         return self.nickname

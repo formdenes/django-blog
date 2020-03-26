@@ -10,6 +10,9 @@
             {% for form in form_members %}
                 <div class="edit-members-list">{{ form }}</div>
             {% endfor %}
+            {% if error %}
+                <p>{{error}}</p>
+            {% endif %}
         </div>
         <button type="submit" value="editpatrolmembers">Mentés</button>
     </form>
