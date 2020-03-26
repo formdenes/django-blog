@@ -20,3 +20,12 @@ class Challenge(models.Model):
             return self.desc
         return self.desc[:200] + "..."
 
+class NewsPost(models.Model):
+    header = models.CharField(max_length=100)
+    body = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    actual = models.BooleanField()
+    img = models.ImageField(blank=True)
+
+    def __str__(self):
+        return self.header

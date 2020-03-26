@@ -3,9 +3,20 @@
 {% block content %}
     <section class="news">
         <h2>Híreink</h2>
+        {% for news in actual_news %}
+            <div class="news-post">
+                <h3>{{news.header}}</h3>
+                <p class="news-text">
+                    {{news.body}}
+                </p>
+                {% if news.img %}
+                    <div class="news-img"><img src="{{news.img.url}}" alt="news-img"></div>
+                {% endif %}
+            </div>
+        {% endfor %}
     </section>
     <section class="latest-challenges">
-        <h2>Legutóbbi kihivások</h2>
+        <h2>Legutóbbi kihívások</h2>
         {% for ch in latest_challenges %}
         {% if forloop.counter0|divisibleby:'5' %}
         <div class="row">

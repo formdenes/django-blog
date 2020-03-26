@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Challenge
+from .models import Challenge, NewsPost
 from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from . import forms
+from django.db.models.functions import Lower
+from django.db.models import Q
 
 # Create your views here.
 def challenge_list(request):
@@ -39,17 +41,24 @@ def kereses(request):
             tags = form.cleaned_data['search_text']
             tags = tags.split()
             results = Challenge.objects.filter(tags__name__in=tags).distinct()
+            # title_results = Challenge.objects.filter(name='undefined')
+            # for t in tags:
+            #     q1 = Challenge.objects.filter(name__contains=tags.forloop.coun)
+            #     title_results.union(q1)
+            # title_results = Challenge.objects.filter(name__contains=tags[0])
+            # results += Challenge.objects.filter(tags__name__in=name).distinct()
             return render(request,"search_challenge.html", {'form':form, 'results':results})
         else:
-            message: "Hibás keresés"
+            message= "Hibás keresés"
             return render(request, "search_challenge.html",{'form':form, 'message':message})
     else:
         form = forms.SearchChallenge()
     return render(request, "search_challenge.html", {'form':form})
 
 def index(request):
+    actual_news = NewsPost.objects.filter(actual=True).order_by('-timestamp')
     latest_challenges = Challenge.objects.filter(promoted = True).order_by('-timestamp')[:3]
     top_challenges = Challenge.objects.filter(promoted = True).order_by('timestamp')[:3]
-    return render(request, 'kihivasok/index.html', {'latest_challenges':latest_challenges, 'top_challenges':top_challenges})
+    return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges})
 
 
