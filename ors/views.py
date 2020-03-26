@@ -9,11 +9,11 @@ from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmember
 from django.forms.formsets import formset_factory
 
 # Create your views here.
-def ors_tagok(request):
+def csapatok(request):
     patrols = Patrol.objects.all().order_by('group_num')
     groups = Group.objects.all().order_by('number')
     members = Patrolmember.objects.all()
-    return render(request, 'ors/ors_tagok.html',{'patrols':patrols, 'groups':groups,'members':members})
+    return render(request, 'ors/groups.html',{'patrols':patrols, 'groups':groups,'members':members})
 
 @login_required(login_url='/accounts/login')
 def ors_mypatrol(request):

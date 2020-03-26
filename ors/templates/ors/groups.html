@@ -1,0 +1,15 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h2>Csapatok listája</h2>
+{% for group in groups %}
+<div class="groups">
+    <h3>{{group.number}}. cscs</h3>
+    {% for p in patrols %}
+    {% if p.group_num.number == group.number %}
+    <p class="patrols">{{p.name}} őrs</p>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

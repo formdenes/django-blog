@@ -7,5 +7,6 @@ urlpatterns = [
     path('mypatrol/', views.ors_mypatrol, name='mypatrol'),
     path('editpatrol/', views.ors_editpatrol, name='editpatrol'),
     path('editpatrolmembers/', views.ors_editpatrolmembers, name='editpatrolmembers'),
-    path('', views.ors_tagok, name='taglista'),
+    path('csapatok/', views.csapatok, name='csapatok'),
+    path('', views.csapatok, name='taglista'),
 ]

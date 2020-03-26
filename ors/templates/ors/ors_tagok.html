@@ -8,14 +8,14 @@
             {% for p in patrols %}
                 {% if p.group_num.number == group.number %}
                     <p class="patrols">{{p.name}} őrs</p>
-                    <ul>
+                    <!-- <ul>
                         <li>{{p.group_leader}} őv.</li>
                         {% for m in members %}
                             {% if m.patrol == p %}
                             <li>{{m.nickname}}</li>
                             {% endif %}
                         {% endfor %}                
-                    </ul>
+                    </ul> -->
                 {% endif %}
             {% endfor %}
         </div>
