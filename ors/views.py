@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from .models import Patrol, Group, Patrolmember
 from django.contrib.auth.decorators import login_required
 from . import forms
-from .forms import SearchPatrol
+from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet
+from django.forms.formsets import formset_factory
 
 # Create your views here.
 def ors_tagok(request):
@@ -18,6 +19,52 @@ def ors_mypatrol(request):
     patrol = Patrol.objects.filter(group_leader=current_user)
     members = Patrolmember.objects.filter(patrol = patrol[0])
     return render(request, 'ors/mypatrol.html',{'patrol': patrol, 'members':members})
+
+@login_required(login_url="/accounts/login")
+def ors_editpatrol(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form_patrol = forms.EditPatrol(request.POST)
+        if form_patrol.is_valid():
+            #save patrol to db
+            instance = form_patrol.save(commit=False)
+            existing_patrol = Patrol.objects.get(group_leader=current_user)
+            if existing_patrol:
+                existing_patrol.name = instance.name
+                existing_patrol.group_num = instance.group_num
+                existing_patrol.secret = instance.secret
+                existing_patrol.save()
+            else:
+                instance.group_leader = request.user
+                instance.save()
+            return redirect('ors:mypatrol')
+    else:
+        patrol = Patrol.objects.filter(group_leader=current_user)
+        patrol = patrol[0]
+        form_patrol = forms.EditPatrol(
+            initial = {
+                'name': patrol.name,
+                'group_num':patrol.group_num,
+                'secret':patrol.secret
+                })
+        #patrolmembers data
+    return render(request, 'ors/editpatrol.html', {'form_patrol': form_patrol})
+
+@login_required(login_url="/accounts/login")
+def ors_editpatrolmembers(request):
+    member_formset = formset_factory(EditPatrolmembers, extra=1, max_num=20, can_delete=True)
+    current_user = request.user
+    patrol = Patrol.objects.filter(group_leader=current_user)
+    patrol = patrol[0]
+    members = Patrolmember.objects.filter(patrol=patrol).order_by('nickname')
+    if  request.method == 'POST':
+        form_members = forms.EditPatrolmembers(request.POST)
+        if form_members.is_valid():
+            pass
+    else:
+        form_members = member_formset(initial=members.values())
+    return render(request, 'ors/editpatrolmembers.html', {'form_members':form_members})
+    
 
 def ors_patrol_collection(request):
     if request.method == 'POST':

@@ -1,0 +1,17 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<section class="edit-patrolmembers">
+    <h2>Őrstagok szerkesztése</h2>
+    <form action="{% url 'ors:editpatrolmembers'%}" class="site-form" method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{form_members.management_form}}
+        <div class="member-div">
+            {% for form in form_members %}
+                <div class="edit-members-list">{{ form }}</div>
+            {% endfor %}
+        </div>
+        <button type="submit" value="editpatrolmembers">Mentés</button>
+    </form>
+</section>
+{% endblock %}

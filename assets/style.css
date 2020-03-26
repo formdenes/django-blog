@@ -186,3 +186,8 @@ section h2{
     color: black !important;
     margin: 1rem 0;
 }
+
+.edit-members-list{
+    margin: 1rem .5rem;
+    padding: .5rem
+}

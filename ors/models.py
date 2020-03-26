@@ -5,15 +5,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Group(models.Model):
-    # number = models.CharField(
-    #     max_length=4,
-    #     validators=[
-    #         RegexValidator(
-    #             regex ='^[0-9]*$',
-    #             message='A csapatszám nem tartalmazhat nem numerikus értéket!'
-    #         )
-    #     ]
-    # )
     number = models.IntegerField()
 
     def __str__(self):
