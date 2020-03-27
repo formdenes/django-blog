@@ -2,6 +2,8 @@ from django import forms
 from . import models
 from django.forms.widgets import HiddenInput, PasswordInput
 from django.forms.formsets import BaseFormSet
+from django.utils.translation import gettext_lazy as _
+
 
 class SearchPatrol(forms.Form):
     group_number = forms.CharField(label='Csapatszám', max_length=4)
@@ -45,7 +47,9 @@ class EditChallengeList(forms.ModelForm):
     class Meta:
         model = models.PatrolChallenge
         fields = ['challenge']
-
+        labels = {
+            'challenge': _('Kihívás')
+        }
 
 class EditChallengeListFormSet(BaseFormSet):
     def clean(self):

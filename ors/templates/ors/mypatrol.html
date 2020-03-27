@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Őrsöm</h2>
 <div class="groups">
-    <h3>{{patrol.0.name}} őrs</h3>
+    <h3>{{patrol.name}} őrs</h3>
     <ul>
         {% for m in members %}
             <li>{{m.nickname}}</li>
@@ -13,14 +13,27 @@
     <a href="{% url 'ors:editpatrolmembers' %}"><button>Őrstagok szerkesztése</button></a>
 </div>
 <div class="groups">
-    <h3>Őrs kihívásainak szerkesztése</h3>
+    <h3>Őrsi kihívások</h3>
     <form action="{% url 'ors:mypatrol'%}" class="site-form" method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         {{form_challenges.management_form}}
-        <div class="member-div">
-            {% for form in form_challenges %}
-            <div class="edit-challenge-list">{{ form }}</div>
-            {% endfor %}
+        <div class="edit-challenge-div">
+            <div class="left-col">
+                <ul>
+                    {% for ch in challenges %}
+                    <li>{{ch}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="right-col">
+                
+                <ul>
+                    {% for form in form_challenges %}
+                    <div class="hidden">{{form.challenge}}</div>
+                    <div>{{form.DELETE}} törlés</div>
+                    {% endfor %}
+                </ul>
+            </div>
             {% if error %}
             <p>{{error}}</p>
             {% endif %}

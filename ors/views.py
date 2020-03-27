@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from .models import Patrol, Group, Patrolmember, PatrolChallenge
+from kihivasok.models import Challenge
 from django.db import transaction, IntegrityError
 from django.contrib.auth.decorators import login_required
 from . import forms
@@ -18,11 +19,12 @@ def csapatok(request):
 @login_required(login_url='/accounts/login')
 def ors_mypatrol(request):
     challenge_formset = formset_factory(
-        EditChallengeList, extra=0, can_delete=True)
+        EditChallengeList, extra=0, can_delete=True, max_num=1)
     current_user = request.user
     patrol = Patrol.objects.filter(group_leader=current_user)
-    members = Patrolmember.objects.filter(patrol = patrol[0])
-    challenges = PatrolChallenge.objects.filter(patrol=patrol[0])
+    patrol = patrol[0]
+    members = Patrolmember.objects.filter(patrol = patrol)
+    challenges = PatrolChallenge.objects.filter(patrol=patrol).order_by('challenge__name')
     if request.method == 'POST':
         form_challenges = challenge_formset(request.POST)
         if form_challenges.is_valid():
@@ -37,19 +39,19 @@ def ors_mypatrol(request):
                 with transaction.atomic():
                     PatrolChallenge.objects.filter(patrol=patrol).delete()
                     PatrolChallenge.objects.bulk_create(challenge_list)
-                    challenges = PatrolChallenge.objects.filter(
-                        patrol=patrol).order_by('challenge')
-                    form_challenges = challenge_formset(initial=challenges.values())
-                    return render(request, 'ors/mypatrol.html', {'form_challenges': form_challenges})
+                    existing_ch = PatrolChallenge.objects.filter(patrol=patrol).values('challenge').order_by('challenge__name')
+                    form_challenges = challenge_formset(initial=existing_ch)
+                    return render(request, 'ors/mypatrol.html', {'patrol': patrol, 'members': members, 'form_challenges': form_challenges, 'challenges': challenges})
             except IntegrityError:
                 messages.error(request, 'Sajnos valami hiba történt!')
                 return render(request, 'ors/mypatrol.html', {'form_challenges': form_challenges})
         else:
             error_message = form_challenges.errors
-            return render(request, 'ors/mypatrol.html', {'form_challenges': form_challenges, 'error': error_message})
+            return render(request, 'ors/mypatrol.html', {'patrol': patrol, 'members': members, 'form_challenges': form_challenges, 'challenges': challenges, 'error': error_message})
     else:
-        form_challenges = challenge_formset(initial=challenges.values())
-    return render(request, 'ors/mypatrol.html',{'patrol': patrol, 'form_challenges':form_challenges, 'members':members})
+        existing_ch = PatrolChallenge.objects.filter(patrol=patrol).values('challenge').order_by('challenge__name')
+        form_challenges = challenge_formset(initial=existing_ch)
+    return render(request, 'ors/mypatrol.html', {'patrol': patrol,'members': members,'form_challenges': form_challenges,'challenges': challenges})
 
 @login_required(login_url="/accounts/login")
 def ors_editpatrol(request):
