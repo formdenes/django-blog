@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
-from .models import Patrol, Group, Patrolmember
+from .models import Patrol, Group, Patrolmember, PatrolChallenge
 from django.db import transaction, IntegrityError
 from django.contrib.auth.decorators import login_required
 from . import forms
-from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet
+from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet, EditChallengeList
 from django.forms.formsets import formset_factory
 
 # Create your views here.
@@ -17,10 +17,39 @@ def csapatok(request):
 
 @login_required(login_url='/accounts/login')
 def ors_mypatrol(request):
+    challenge_formset = formset_factory(
+        EditChallengeList, extra=0, can_delete=True)
     current_user = request.user
     patrol = Patrol.objects.filter(group_leader=current_user)
     members = Patrolmember.objects.filter(patrol = patrol[0])
-    return render(request, 'ors/mypatrol.html',{'patrol': patrol, 'members':members})
+    challenges = PatrolChallenge.objects.filter(patrol=patrol[0])
+    if request.method == 'POST':
+        form_challenges = challenge_formset(request.POST)
+        if form_challenges.is_valid():
+            challenge_list = []
+            for challenge_form in form_challenges:
+                challenge = challenge_form.cleaned_data.get('challenge')
+                to_delete = challenge_form.cleaned_data.get('DELETE')
+                if challenge and not to_delete:
+                    challenge_list.append(PatrolChallenge(
+                        patrol=patrol, challenge=challenge))
+            try:
+                with transaction.atomic():
+                    PatrolChallenge.objects.filter(patrol=patrol).delete()
+                    PatrolChallenge.objects.bulk_create(challenge_list)
+                    challenges = PatrolChallenge.objects.filter(
+                        patrol=patrol).order_by('challenge')
+                    form_challenges = challenge_formset(initial=challenges.values())
+                    return render(request, 'ors/mypatrol.html', {'form_challenges': form_challenges})
+            except IntegrityError:
+                messages.error(request, 'Sajnos valami hiba történt!')
+                return render(request, 'ors/mypatrol.html', {'form_challenges': form_challenges})
+        else:
+            error_message = form_challenges.errors
+            return render(request, 'ors/mypatrol.html', {'form_challenges': form_challenges, 'error': error_message})
+    else:
+        form_challenges = challenge_formset(initial=challenges.values())
+    return render(request, 'ors/mypatrol.html',{'patrol': patrol, 'form_challenges':form_challenges, 'members':members})
 
 @login_required(login_url="/accounts/login")
 def ors_editpatrol(request):
@@ -100,9 +129,10 @@ def ors_patrol_collection(request):
             ret_group = Group.objects.get(number=group)
             ret_patrol = Patrol.objects.get(group_num=ret_group, name=patrol)
             ret_pw = ret_patrol.secret
+            ret_challenges = PatrolChallenge.objects.filter(patrol = ret_patrol)
             if pw == ret_pw:
-                members = Patrolmember.objects.filter(patrol = ret_patrol)
-                return render(request, 'patrol_collection.html', {'patrol':patrol, 'members':members})
+                members = Patrolmember.objects.filter(patrol = ret_patrol).order_by('nickname')
+                return render(request, 'patrol_collection.html', {'patrol':patrol, 'members':members, 'challenges':ret_challenges})
             else:
                 message = "Hibás őrsi titok! Figyelj oda a kis- és nagybetűkre, Caps Lock használatára!"
                 form2 = forms.SearchPatrol()

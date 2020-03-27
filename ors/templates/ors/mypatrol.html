@@ -12,4 +12,20 @@
     <a href="{% url 'ors:editpatrol' %}"><button>Őrs adatainak szerkesztése</button></a>
     <a href="{% url 'ors:editpatrolmembers' %}"><button>Őrstagok szerkesztése</button></a>
 </div>
+<div class="groups">
+    <h3>Őrs kihívásainak szerkesztése</h3>
+    <form action="{% url 'ors:mypatrol'%}" class="site-form" method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{form_challenges.management_form}}
+        <div class="member-div">
+            {% for form in form_challenges %}
+            <div class="edit-challenge-list">{{ form }}</div>
+            {% endfor %}
+            {% if error %}
+            <p>{{error}}</p>
+            {% endif %}
+        </div>
+        <button type="submit" value="mypatrol">Mentés</button>
+    </form>
+</div>
 {% endblock %}

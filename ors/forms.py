@@ -40,3 +40,28 @@ class EnterPassword(forms.Form):
     password = forms.CharField(label='Őrsi titok')
     group = forms.CharField(widget=forms.HiddenInput())
     patrol = forms.CharField(widget=forms.HiddenInput())
+
+class EditChallengeList(forms.ModelForm):
+    class Meta:
+        model = models.PatrolChallenge
+        fields = ['challenge']
+
+
+class EditChallengeListFormSet(BaseFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+
+        challenges = []
+
+        for form in self.forms:
+            if form.cleaned_data:
+                challenge = form.cleaned_data['challenge']
+
+                if challenge in challenges:
+                    duplicates = True
+                challenges.append(challenge)
+
+            if duplicates:
+                raise forms.ValidationError(
+                    'Nem lehet ugyanaz a kihívás kétszer!')
