@@ -18,6 +18,7 @@ def csapatok(request):
 
 @login_required(login_url='/accounts/login')
 def ors_mypatrol(request):
+    # should be split in two
     challenge_formset = formset_factory(
         EditChallengeList, extra=0, can_delete=True, max_num=1)
     current_user = request.user

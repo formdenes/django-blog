@@ -33,7 +33,6 @@ class Patrolmember(models.Model):
 class PatrolChallenge(models.Model):
     patrol = models.ForeignKey(Patrol, on_delete=models.CASCADE)
     challenge = models.ForeignKey(Challenge, on_delete = models.CASCADE)
-    challenge_name = challenge.name
 
     class Meta:
         unique_together = ('patrol', 'challenge')
