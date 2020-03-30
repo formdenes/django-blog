@@ -75,14 +75,13 @@ def kereses(request):
                 challenge_inst = Challenge.objects.get(pk=challenge_pk)
                 addChallenge = PatrolChallenge(
                     patrol=patrol_inst, challenge=challenge_inst)
+                is_there = PatrolChallenge.objects.filter(patrol=patrol_inst, challenge=challenge_inst)
                 #check if already in list
-                try:
+                if not is_there:
                     addChallenge.save()
-                except:
-                    pass
-
-                tags = request.POST.get('keywords')
-                tags = tags.split()
+                # search part
+                keywords = request.POST.get('keywords')
+                tags = keywords.split()
                 q_object = Q(name__icontains=tags[0])
                 for item in tags:
                     q_object.add(Q(name__icontains=item) |
@@ -90,6 +89,7 @@ def kereses(request):
                 q_object.add(Q(tags__name__in=tags), Q.OR)
                 queryset = Challenge.objects.filter(q_object).distinct()
                 results = queryset
+                form_search = forms.SearchChallenge(initial={'search_text':keywords})
                 return render(request, 'search_challenge.html', {'form_search':form_search,'results':results, 'form_challenge':form_challenge})
                 # return HttpResponseRedirect(request.path_info)
         elif request.method == "POST" and 'search' in request.POST:
@@ -108,7 +108,7 @@ def kereses(request):
                 message = form_search.errors
                 return render(request, "search_challenge.html", {'form_search': form_search, 'message': message, 'form_challenge':form_challenge})
         else:
-            form = AddChallengeToPatrol(initial={'patrol': patrol_id})
+            form_challenge = AddChallengeToPatrol(initial={'patrol': patrol_id})
         return render(request, 'search_challenge.html', {'form_search': form_search, 'form_challenge': form_challenge})
     else:
         if request.method == "POST":
