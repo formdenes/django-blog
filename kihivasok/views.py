@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from . import forms
 from .forms import AddChallengeToPatrol
 from django.db.models.functions import Lower
-from django.db.models import Q
+from django.db.models import Q, Count
 
 # Create your views here.
 def challenge_list(request):
@@ -133,8 +133,8 @@ def kereses(request):
 
 def index(request):
     actual_news = NewsPost.objects.filter(actual=True).order_by('-timestamp')
-    latest_challenges = Challenge.objects.filter(promoted = True).order_by('-timestamp')[:3]
-    top_challenges = Challenge.objects.filter(promoted = True).order_by('timestamp')[:3]
+    top_challenges = Challenge.objects.annotate(ch_count=Count('id')).order_by('-ch_count')[:3]
+    latest_challenges = Challenge.objects.filter(promoted = True).order_by('timestamp')[:3]
     user = request.user
     if user.is_authenticated:
         patrol = Patrol.objects.get(group_leader=user)

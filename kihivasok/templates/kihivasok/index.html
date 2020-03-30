@@ -51,6 +51,37 @@
     </section>
     <section class="top-challenges">
         <h2>Legnépszerűbb kihívásaink</h2>
-        <!-- count challenge entities in patrolchallenge top 5-->
+        {{top_challenges}}
+        {% for ch in top_challenges %}
+        {% if forloop.counter0|divisibleby:'5' %}
+        <div class="row">
+            {% endif %}
+            <div class="ch-card">
+                <div class="logo"><img src="{{ch.thumb.url}}" alt="thumbnail-img"></div>
+                <div class="details">
+                    <h4 class="ch-title">{{ch.name}}</h4>
+                    <p class="ch-desc">{{ch.snippet}}</p>
+                    <p class="ch-tags">
+                        {% for t in ch.tags.all %}
+                        <span class="ch-tag">#{{t}}</span>
+                        {% endfor %}
+                    </p>
+                    <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
+                </div>
+                {% if user.is_authenticated %}
+                <div class="addToList">
+                    <form action="{% url 'home'%}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type='hidden' name='{{form.challenge.name}}' value="{{ch.pk}}">
+                        <input type='hidden' name='{{form.patrol.name}}' value="{{form.patrol.value}}">
+                        <button type="submit" class="addChallenge">Hozzáadom az őrsi listámhoz</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            {% if forloop.counter > 3 and forloop.counter|divisibleby:'5' %}
+        </div>
+        {% endif %}
+        {% endfor %}
     </section>
 {% endblock %}
