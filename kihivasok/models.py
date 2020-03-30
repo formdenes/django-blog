@@ -9,6 +9,7 @@ class Challenge(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager()
     promoted = models.BooleanField()
+    add_to_patrol = models.BooleanField(default=True)
     thumb = models.ImageField(default="default.png", blank=True)
     created_by = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
 

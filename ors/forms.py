@@ -69,3 +69,4 @@ class EditChallengeListFormSet(BaseFormSet):
             if duplicates:
                 raise forms.ValidationError(
                     'Nem lehet ugyanaz a kihívás kétszer!')
+

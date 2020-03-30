@@ -1,17 +1,27 @@
 from django.shortcuts import render, redirect
 from .models import Challenge, NewsPost
+from ors.models import Patrol, PatrolChallenge
 from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from . import forms
+from .forms import AddChallengeToPatrol
 from django.db.models.functions import Lower
 from django.db.models import Q
 
 # Create your views here.
 def challenge_list(request):
     ch = Challenge.objects.all()
-    # tags = Challenge.tags()
-    return render(request, 'kihivasok/challenge_list.html', {'challenge':ch})
+    user = request.user
+    if user.is_authenticated():
+        if request.method == 'POST':
+            pass
+        else:
+            form = AddChallengeToPatrol()
+            form.patrol = Patrol.objects.get(group_leader = user)
+        return render(request, 'kihivasok/challenge_list.html', {'challenge':ch, 'form':form})
+    else:
+        return render(request, 'kihivasok/challenge_list.html', {'challenge':ch})
 
 @login_required(login_url='/accounts/login')
 def challenge_mylist(request):
