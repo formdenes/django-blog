@@ -10,37 +10,41 @@
 </form>
 <div class="search-results">
     <div class="challenges">
-        {% for ch in results %}
-        {% if forloop.counter0|divisibleby:'3' %}
-        <div class="row">
-            {% endif %}
-            <div class="ch-card">
-                <div class="logo"><img src="{{ch.thumb.url}}" alt="thumbnail-img"></div>
-                <div class="details">
-                    <h4 class="ch-title">{{ch.name}}</h4>
-                    <p class="ch-desc">{{ch.snippet}}</p>
-                    <p class="ch-tags">
-                        {% for t in ch.tags.all %}
-                        <span class="ch-tag">#{{t}}</span>
-                        {% endfor %}
-                    </p>
-                    <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
-                </div>
-                {% if user.is_authenticated %}
-                <div class="addToList">
-                    <form action="{% url 'search'%}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type='hidden' name='{{form_challenge.challenge.name}}' value="{{ch.pk}}">
-                        <input type='hidden' name='{{form_challenge.patrol.name}}' value="{{form_challenge.patrol.value}}">
-                        <button type="submit" class="addChallenge" name="addChallenge">Hozzáadom az őrsi listámhoz</button>
-                    </form>
-                </div>
+        {% if results %}
+            {% for ch in results %}
+            {% if forloop.counter0|divisibleby:'3' %}
+            <div class="row">
                 {% endif %}
+                <div class="ch-card">
+                    <div class="logo"><img src="{{ch.thumb.url}}" alt="thumbnail-img"></div>
+                    <div class="details">
+                        <h4 class="ch-title">{{ch.name}}</h4>
+                        <p class="ch-desc">{{ch.snippet}}</p>
+                        <p class="ch-tags">
+                            {% for t in ch.tags.all %}
+                            <span class="ch-tag">#{{t}}</span>
+                            {% endfor %}
+                        </p>
+                        <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <div class="addToList">
+                        <form action="{% url 'search'%}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type='hidden' name='{{form_challenge.challenge.name}}' value="{{ch.pk}}">
+                            <input type='hidden' name='{{form_challenge.patrol.name}}' value="{{form_challenge.patrol.value}}">
+                            <button type="submit" class="addChallenge" name="addChallenge">Hozzáadom az őrsi listámhoz</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
             </div>
-            {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
-        </div>
+            {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Sajnos nem találtunk egyetlen kihívást sem a fenti paraméterekkel.</p>
         {% endif %}
-        {% endfor %}
     </div>
 </div>
 {% endblock %}
