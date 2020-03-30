@@ -1,9 +1,9 @@
-html, body{
+html, body {
     margin: 0;
     padding: 0;
 }
 
-body{
+body {
     color: white;
     background-color: #0f121f;
     background-image: url(bg.jpg);
@@ -14,53 +14,54 @@ body{
     overflow: auto;
 }
 
-body *{
+body * {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-h1, h2, h3, h4, h5{
+h1, h2, h3, h4, h5 {
     font-weight: normal;
     margin: 1rem 0;
 }
 
-a, a:hover, a:visited{
+a, a:hover, a:visited {
     text-decoration: none;
     color: white;
 }
 
-.row{
+.row {
     display: flex;
     flex-wrap: wrap;
     margin-right: 0;
     margin-left: 0;
 }
 
-.row:after, .row:before{
+.row:after, .row:before {
     display: table;
     content: "";
 }
-.row:after{
+
+.row:after {
     clear: both;
 }
 
-#page-logo{
+#page-logo {
     height: 50px;
 }
 
-nav{
+nav {
     display: block;
     position: absolute;
-    top:0;
+    top: 0;
     right: 0;
-    transform: translate(-10px,0px);
+    transform: translate(-10px, 0px);
 }
 
-nav ul{
+nav ul {
     list-style: none;
     display: flex;
 }
 
-nav ul li{
+nav ul li {
     margin-right: 1rem;
     border: 1px solid white;
     border-radius: 5px;
@@ -68,7 +69,7 @@ nav ul li{
     cursor: pointer;
 }
 
-.logout{
+.logout {
     background-color: transparent;
     border: none;
     color: white;
@@ -77,23 +78,23 @@ nav ul li{
     cursor: pointer;
 }
 
-.groups{
+.groups {
     background-color: white;
     color: black;
     padding: 1rem;
     margin: 2rem 1rem;
 }
 
-.challenges{
+.challenges {
     display: flex;
     flex-direction: column;
 }
 
-.challenges .row{
+.challenges .row {
     justify-content: center;
 }
 
-.ch-card{
+.ch-card {
     background-color: white;
     color: black;
     padding: .5rem;
@@ -102,37 +103,37 @@ nav ul li{
     border-radius: 5px;
 }
 
-.ch-card:hover{
-    box-shadow: 4px 4px 20px rgba(200,200,200,.3);
+.ch-card:hover {
+    box-shadow: 4px 4px 20px rgba(200, 200, 200, .3);
     transition: .3s;
     cursor: pointer;
 }
 
-.ch-card .details{
+.ch-card .details {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.ch-card .logo{
+.ch-card .logo {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.ch-card .logo img:hover{
+.ch-card .logo img:hover {
     background-color: tomato;
     cursor: pointer;
 }
 
-.ch-card .details .ch-title{
+.ch-card .details .ch-title {
     font-weight: bold;
     font-size: 1.5rem;
 }
 
-.ch-card .logo img{
+.ch-card .logo img {
     width: 5rem;
     height: 5rem;
     border: 3px solid black;
@@ -140,42 +141,42 @@ nav ul li{
     margin-bottom: 2rem;
 }
 
-.ch-tags{
+.ch-tags {
     text-align: center;
 }
 
-.ch-card .ch-tag{
+.ch-card .ch-tag {
     background-color: rgb(146, 146, 146);
     color: white;
     padding: .5rem;
     line-height: 3rem;
 }
 
-.ch-card .ch-tag:not(:last-child){
+.ch-card .ch-tag:not(:last-child) {
     margin-right: .5rem;
 }
 
-.details{
+.details {
     position: relative;
 }
 
-.ch-author{
+.ch-author {
     bottom: 0;
 }
 
-section.news, section.latest-challenges, section.top-challenges{
+section.news, section.latest-challenges, section.top-challenges {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-section h2{
+section h2 {
     margin: 2rem 0;
     font-size: 2rem;
 }
 
-.news-post{
+.news-post {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -187,32 +188,32 @@ section h2{
     margin: 1rem 0;
 }
 
-.edit-members-list{
+.edit-members-list {
     margin: 1rem .5rem;
     padding: .5rem
 }
 
-.edit-challenge-div{
+.edit-challenge-div {
     display: flex;
     width: 100%;
 }
 
-.edit-challenge-div .left-col, .edit-challenge-div .right-col{
+.edit-challenge-div .left-col, .edit-challenge-div .right-col {
     display: flex;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.addToList{
+.addToList {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-input[type=submit], button[type=submit]{
+.addChallenge {
     border: 1px solid;
     font-weight: bold;
     border-radius: 5px;
@@ -220,7 +221,12 @@ input[type=submit], button[type=submit]{
     padding: .25rem;
 }
 
-.test{
+.addChallenge:hover {
+    cursor: pointer;
+    background-color: silver;
+}
+
+.test {
     background-color: pink;
     color: black;
     padding: 1rem;
