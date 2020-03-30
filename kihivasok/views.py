@@ -13,12 +13,26 @@ from django.db.models import Q
 def challenge_list(request):
     ch = Challenge.objects.all()
     user = request.user
-    if user.is_authenticated():
+    patrol = Patrol.objects.get(group_leader=user)
+    patrol_id = patrol.id
+    if user.is_authenticated:
         if request.method == 'POST':
-            pass
+            form = AddChallengeToPatrol(request.POST)
+            if form.is_valid():
+                #addtolist
+                patrol_pk = form.cleaned_data['patrol']
+                patrol_inst = Patrol.objects.get(pk = patrol_pk)
+                challenge_pk = form.cleaned_data['challenge']
+                challenge_inst = Challenge.objects.get(pk = challenge_pk)
+                addChallenge = PatrolChallenge(patrol=patrol_inst, challenge=challenge_inst)
+                #check if already in list
+                try:
+                    addChallenge.save()
+                except:
+                    pass
+                return render(request, 'kihivasok/challenge_list.html', {'challenge': ch, 'form': form})
         else:
-            form = AddChallengeToPatrol()
-            form.patrol = Patrol.objects.get(group_leader = user)
+            form = AddChallengeToPatrol(initial={'patrol':patrol_id})
         return render(request, 'kihivasok/challenge_list.html', {'challenge':ch, 'form':form})
     else:
         return render(request, 'kihivasok/challenge_list.html', {'challenge':ch})

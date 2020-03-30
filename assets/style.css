@@ -204,3 +204,9 @@ section h2{
 .hidden{
     display: none;
 }
+
+.test{
+    background-color: pink;
+    color: black;
+    padding: 1rem;
+}
