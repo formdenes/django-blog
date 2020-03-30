@@ -31,6 +31,7 @@
                     <div class="addToList">
                         <form action="{% url 'search'%}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
+                            <input type="hidden" name="keywords" value="{{form_search.search_text.value}}">
                             <input type='hidden' name='{{form_challenge.challenge.name}}' value="{{ch.pk}}">
                             <input type='hidden' name='{{form_challenge.patrol.name}}' value="{{form_challenge.patrol.value}}">
                             <button type="submit" class="addChallenge" name="add" value="add">Hozzáadom az őrsi listámhoz</button>
@@ -43,7 +44,9 @@
             {% endif %}
             {% endfor %}
         {% else %}
-            <p>Sajnos nem találtunk egyetlen kihívást sem a fenti paraméterekkel.</p>
+            {% if message %}
+                <p>Sajnos nem találtunk egyetlen kihívást sem a fenti paraméterekkel.</p>
+            {% endif %}
         {% endif %}
     </div>
 </div>
