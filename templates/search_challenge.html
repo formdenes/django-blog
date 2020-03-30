@@ -33,7 +33,7 @@
                             {% csrf_token %}
                             <input type='hidden' name='{{form_challenge.challenge.name}}' value="{{ch.pk}}">
                             <input type='hidden' name='{{form_challenge.patrol.name}}' value="{{form_challenge.patrol.value}}">
-                            <button type="submit" class="addChallenge" name="addChallenge">Hozzáadom az őrsi listámhoz</button>
+                            <button type="submit" class="addChallenge" name="add" value="add">Hozzáadom az őrsi listámhoz</button>
                         </form>
                     </div>
                     {% endif %}
