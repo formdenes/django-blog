@@ -13,9 +13,9 @@ from django.db.models import Q
 def challenge_list(request):
     ch = Challenge.objects.all()
     user = request.user
-    patrol = Patrol.objects.get(group_leader=user)
-    patrol_id = patrol.id
     if user.is_authenticated:
+        patrol = Patrol.objects.get(group_leader=user)
+        patrol_id = patrol.id
         if request.method == 'POST':
             form = AddChallengeToPatrol(request.POST)
             if form.is_valid():
