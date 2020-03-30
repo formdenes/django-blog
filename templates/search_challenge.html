@@ -4,8 +4,8 @@
 <h2>Kihívás keresése</h2>
 <form action="{% url 'search'%}" class="site-form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{form}}
-    <button type="submit" value="search">Keresés</button>
+    {{form_search}}
+    <button type="submit" value="search" name="search">Keresés</button>
     <p>{{message}}</p>
 </form>
 <div class="search-results">
@@ -26,6 +26,16 @@
                     </p>
                     <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
                 </div>
+                {% if user.is_authenticated %}
+                <div class="addToList">
+                    <form action="{% url 'search'%}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type='hidden' name='{{form_challenge.challenge.name}}' value="{{ch.pk}}">
+                        <input type='hidden' name='{{form_challenge.patrol.name}}' value="{{form_challenge.patrol.value}}">
+                        <button type="submit" class="addChallenge" name="addChallenge">Hozzáadom az őrsi listámhoz</button>
+                    </form>
+                </div>
+                {% endif %}
             </div>
             {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
         </div>
