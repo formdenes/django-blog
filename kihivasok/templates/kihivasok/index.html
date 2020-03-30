@@ -33,6 +33,16 @@
                     </p>
                     <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
                 </div>
+                {% if user.is_authenticated %}
+                <div class="addToList">
+                    <form action="{% url 'home'%}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type='hidden' name='{{form.challenge.name}}' value="{{ch.pk}}">
+                        <input type='hidden' name='{{form.patrol.name}}' value="{{form.patrol.value}}">
+                        <button type="submit" class="addChallenge">Hozzáadom az őrsi listámhoz</button>
+                    </form>
+                </div>
+                {% endif %}
             </div>
             {% if forloop.counter > 3 and forloop.counter|divisibleby:'5' %}
         </div>

@@ -83,6 +83,30 @@ def index(request):
     actual_news = NewsPost.objects.filter(actual=True).order_by('-timestamp')
     latest_challenges = Challenge.objects.filter(promoted = True).order_by('-timestamp')[:3]
     top_challenges = Challenge.objects.filter(promoted = True).order_by('timestamp')[:3]
-    return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges})
+    user = request.user
+    if user.is_authenticated:
+        patrol = Patrol.objects.get(group_leader=user)
+        patrol_id = patrol.id
+        if request.method == 'POST':
+            form = AddChallengeToPatrol(request.POST)
+            if form.is_valid():
+                #addtolist
+                patrol_pk = form.cleaned_data['patrol']
+                patrol_inst = Patrol.objects.get(pk=patrol_pk)
+                challenge_pk = form.cleaned_data['challenge']
+                challenge_inst = Challenge.objects.get(pk=challenge_pk)
+                addChallenge = PatrolChallenge(
+                    patrol=patrol_inst, challenge=challenge_inst)
+                #check if already in list
+                try:
+                    addChallenge.save()
+                except:
+                    pass
+                return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges, 'form': form})
+        else:
+            form = AddChallengeToPatrol(initial={'patrol': patrol_id})
+        return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges, 'form': form})
+    else:
+        return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges})
 
 
