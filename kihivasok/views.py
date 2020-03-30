@@ -11,7 +11,7 @@ from django.db.models import Q
 
 # Create your views here.
 def challenge_list(request):
-    ch = Challenge.objects.all()
+    ch = Challenge.objects.filter(promoted=True)
     user = request.user
     if user.is_authenticated:
         patrol = Patrol.objects.get(group_leader=user)
@@ -101,7 +101,7 @@ def kereses(request):
                 for item in tags:
                     q_object.add(Q(name__icontains=item) | Q(desc__icontains=item), Q.OR)
                 q_object.add(Q(tags__name__in=tags), Q.OR)
-                queryset = Challenge.objects.filter(q_object).distinct()
+                queryset = Challenge.objects.filter(q_object).distinct().exclude(promoted=False)
                 results = queryset
                 return render(request, "search_challenge.html", {'form_search': form_search, 'results': results, 'form_challenge':form_challenge})
             else:
