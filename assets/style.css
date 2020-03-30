@@ -204,3 +204,24 @@ section h2{
 .hidden{
     display: none;
 }
+
+.addToList{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=submit], button[type=submit]{
+    border: 1px solid;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: .25rem;
+}
+
+.test{
+    background-color: pink;
+    color: black;
+    padding: 1rem;
+}
