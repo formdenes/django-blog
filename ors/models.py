@@ -41,10 +41,3 @@ class PatrolChallenge(models.Model):
     def __str__(self):
         pair = self.patrol.name + ' őrs - ' + self.challenge.name + ' kihívás'
         return pair
-
-class PatrolChallengeCart(models.Model):
-    patrol = models.ForeignKey(Patrol, on_delete=models.CASCADE)
-    challenges = models.ManyToManyField(Challenge)
-
-    class Meta:
-        ordering = ['patrol']
