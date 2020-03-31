@@ -231,3 +231,37 @@ section h2 {
     color: black;
     padding: 1rem;
 }
+
+.single-challenge-row{
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem;
+    width: 50%;
+}
+
+.single-challenge-row .single-challenge-title{
+    width: 40%;
+    max-width: 40%;
+}
+.single-challenge-row .single-challenge-status{
+    width: 20%;
+    max-width: 20%;
+}
+.single-challenge-row .single-challenge-number{
+    width: 10%;
+    max-width: 10%;
+}
+
+.single-challenge-thumb{
+    width: 40px;
+    border: 3px solid black;
+    border-radius: 50%;
+}
+
+.single-challenge-thumb.status-assigned{
+    border: 3px solid tomato;
+}
+.single-challenge-thumb.status-finished{
+    border: 3px solid tomato;
+    background-color: gold;
+}

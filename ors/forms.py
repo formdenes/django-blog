@@ -20,6 +20,19 @@ class EditPatrolmembers(forms.ModelForm):
         model = models.Patrolmember
         fields = ['nickname']
 
+
+STATUS_OPTIONS = (
+    ('N', 'None'),
+    ('A', 'Assigned'),
+    ('F', 'Finished')
+)
+
+class EditPatrolmemberChallenge(forms.Form):
+    member_pk = forms.CharField(widget=forms.HiddenInput())
+    challenge_pk = forms.CharField(widget=forms.HiddenInput())
+    status = forms.ChoiceField(choices=STATUS_OPTIONS)
+    times = forms.IntegerField()
+
 class EditPatrolmembersFormSet(BaseFormSet):
     def clean(self):
         if any(self.errors):

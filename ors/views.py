@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
-from .models import Patrol, Group, Patrolmember, PatrolChallenge
+from .models import Patrol, Group, Patrolmember, PatrolChallenge, PatrolmemberChallenge
 from kihivasok.models import Challenge
 from django.db import transaction, IntegrityError
 from django.contrib.auth.decorators import login_required
 from . import forms
-from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet, EditChallengeList
+from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet, EditChallengeList, EditPatrolmemberChallenge
 from kihivasok.forms import RemoveChallengeFromPatrol
 from django.forms.formsets import formset_factory
 
@@ -174,3 +174,35 @@ def ors_status(request):
         form = SearchPatrol()
         # megoldani, hogy legordulo listabol lehessen valasztani
     return render(request, 'patrol_search.html', {'form': form})
+
+@login_required(login_url='/accounts/login')
+def ors_editcollection(request):
+    user = request.user
+    patrol = Patrol.objects.filter(group_leader = user)
+    members = Patrolmember.objects.filter(patrol=patrol[0]).order_by('nickname')
+    full_collection = PatrolmemberChallenge.objects.filter().order_by('nickname__nickname')
+    if request.method == "POST":
+        form = EditPatrolmemberChallenge(request.POST)
+        if form.is_valid():
+            member_pk = form.cleaned_data['member_pk']
+            challenge_pk = form.cleaned_data['challenge_pk']
+            status = form.cleaned_data['status']
+            times = form.cleaned_data['times']
+            nickname = Patrolmember.objects.get(pk=member_pk)
+            challenge = Challenge.objects.get(pk=challenge_pk)
+            pmc = PatrolmemberChallenge.objects.get(nickname=nickname, challenge=challenge)
+            pmc.status = status
+            pmc.times = times
+            # if pmc.times >0 and 'F' not in pmc.status:
+            #     # solve it with JS!
+            #     message = "A státusznak befejezettnek kell lennie!"
+            #     return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form': form, 'message': message})
+            # else:
+            pmc.save()
+            return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form': form})
+        else:
+            message = form.errors
+            return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form': form, 'message':message})
+    else:
+        form = forms.EditPatrolmemberChallenge()
+    return render(request, 'ors/editcollection.html', {'full_collection':full_collection, 'members':members, 'form':form})

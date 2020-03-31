@@ -1,0 +1,37 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<section class="edit-patrolmembers">
+    <h2>Őrsi gyűjtemény szerkesztése</h2>
+    {% for member in members %}
+        <div class="groups">
+        <h3>{{member.nickname}}</h3>
+        {% for pmc in full_collection %}
+            {% if member.nickname == pmc.nickname.nickname %}
+                <div class="single-challenge-row">
+                    <div class="logo"><img src="{{pmc.challenge.thumb.url}}" alt="{{pmc.challenge.name}}" class="single-challenge-thumb status-{{pmc.get_status_display|lower}}"></div>
+                    <h4 class="single-challenge-title">{{pmc.challenge.name}}</h4>
+                    <!-- ide formot beszúrni -->
+                    <form action="{% url 'ors:editcollection'%}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="{{form.member_pk.name}}" value="{{member.pk}}">
+                        <input type="hidden" name="{{form.challenge_pk.name}}" value="{{pmc.challenge.pk}}">
+                        <select name="status" id="status-{{pmc.pk}}">
+                            {% for value, text in form.fields.status.choices %}
+                                <option value="{{value}}" {% if value == pmc.status %}selected{% endif %}>{{text}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="number" name="{{form.times.name}}" value="{{pmc.times}}">
+                        <!--<input type="number" name="times" id="times-{{pmc.pk}}" value="{{pmc.times}}" class="single-challenge-number">-->
+                        <button type="submit" value="save">Mentés</button>
+                    </form>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% if message %}
+            <p>{{message}}</p>
+        {% endif %}
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -73,9 +73,32 @@ class PatrolmemberChallenge(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_OPTIONS)
     times = models.IntegerField()
 
+    __original_status = None
+    __original_times = None
+
     class Meta:
         unique_together = ('nickname', 'challenge')
     
     def __str__(self):
         name = self.challenge.name + ' (' + self.nickname.nickname + ')'
         return name
+
+    def __init__(self, *args, **kwargs):
+        super(PatrolmemberChallenge, self).__init__(*args,**kwargs)
+        self.__original_status = self.status
+        self.__original_times = self.__original_status
+    
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        if self.status != self.__original_status:
+            #status changed
+            if 'F' in self.status:
+                self.times = 1
+            else:
+                self.times = 0
+        elif self.times != self.__original_times:
+            #status not changed
+            if 'F' not in self.status:
+                self.times = 0
+        super(PatrolmemberChallenge, self).save(force_insert, force_update, *args, **kwargs)
+        self.__original_status = self.status
+        self.__original_times = self.times
