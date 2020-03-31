@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save, post_delete
 from kihivasok.models import Challenge
 from taggit.managers import TaggableManager
 
@@ -42,6 +43,24 @@ class PatrolChallenge(models.Model):
         pair = self.patrol.name + ' őrs - ' + self.challenge.name + ' kihívás'
         return pair
 
+def save_patrol_challenge(sender, instance, **kwargs):
+    patrol = instance.patrol
+    members = Patrolmember.objects.filter(patrol=patrol)
+    challenge = instance.challenge
+    for member in members:
+        new_pmc = PatrolmemberChallenge.objects.create(nickname=member, challenge=challenge, status='N', times=0)
+
+def delete_patrol_challenge(sender, instance, **kwargs):
+    patrol = instance.patrol
+    members = Patrolmember.objects.filter(patrol=patrol)
+    challenge = instance.challenge
+    for member in members:
+        pmc = PatrolmemberChallenge.objects.get(nickname=member, challenge=challenge)
+        pmc.delete()
+
+post_save.connect(save_patrol_challenge, sender=PatrolChallenge)
+post_delete.connect(delete_patrol_challenge, sender=PatrolChallenge)
+
 class PatrolmemberChallenge(models.Model):
     STATUS_OPTIONS = (
         ('N', 'None'),
@@ -50,7 +69,7 @@ class PatrolmemberChallenge(models.Model):
     )
 
     nickname = models.ForeignKey(Patrolmember, on_delete=models.CASCADE)
-    challenge = models.ForeignKey(PatrolChallenge, on_delete=models.CASCADE)
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=STATUS_OPTIONS)
     times = models.IntegerField()
 
@@ -58,5 +77,5 @@ class PatrolmemberChallenge(models.Model):
         unique_together = ('nickname', 'challenge')
     
     def __str__(self):
-        name = self.challenge + ' (' + self.nickname + ')'
+        name = self.challenge.name + ' (' + self.nickname.nickname + ')'
         return name
