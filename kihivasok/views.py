@@ -133,7 +133,12 @@ def kereses(request):
 
 def index(request):
     actual_news = NewsPost.objects.filter(actual=True).order_by('-timestamp')
-    top_challenges = Challenge.objects.annotate(ch_count=Count('id')).order_by('-ch_count')[:3]
+    # top_challenges = Challenge.objects.annotate(ch_count=Count('id')).order_by('-ch_count')[:3]
+    top_challenges_query = PatrolChallenge.objects.values('challenge__name', 'challenge__pk').annotate(c=Count('id')).order_by('-c')[:3]
+    top_challenges_pk = []
+    for item in top_challenges_query:
+        top_challenges_pk.append(item['challenge__pk'])
+    top_challenges = Challenge.objects.filter(pk__in=top_challenges_pk)
     latest_challenges = Challenge.objects.filter(promoted = True).order_by('timestamp')[:3]
     user = request.user
     if user.is_authenticated:
