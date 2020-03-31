@@ -3,42 +3,51 @@
 {% block content %}
 <h2>Őrsöm</h2>
 <div class="groups">
-    <h3>{{patrol.name}} őrs</h3>
+    <h3>Őrs neve: {{patrol.name}} őrs</h3>
+    <h3>Őrsi titok: {{patrol.secret}}</h3>
+    <h3>Őrstagok:</h3>
     <ul>
         {% for m in members %}
             <li>{{m.nickname}}</li>
         {% endfor %}
     </ul>
-    <a href="{% url 'ors:editpatrol' %}"><button>Őrs adatainak szerkesztése</button></a>
-    <a href="{% url 'ors:editpatrolmembers' %}"><button>Őrstagok szerkesztése</button></a>
+    <a href="{% url 'ors:editpatrol' %}"><button class="linkButton">Őrs adatainak szerkesztése</button></a>
+    <a href="{% url 'ors:editpatrolmembers' %}"><button class="linkButton">Őrstagok szerkesztése</button></a>
 </div>
-<div class="groups">
-    <h3>Őrsi kihívások</h3>
-    <form action="{% url 'ors:mypatrol'%}" class="site-form" method="POST" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form_challenges.management_form}}
-        <div class="edit-challenge-div">
-            <div class="left-col">
-                <ul>
-                    {% for ch in challenges %}
-                    <li>{{ch}}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="right-col">
-                
-                <ul>
-                    {% for form in form_challenges %}
-                    <div class="hidden">{{form.challenge}}</div>
-                    <div>{{form.DELETE}} törlés</div>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% if error %}
-            <p>{{error}}</p>
+<div class="challenges" style="text-align: center;">
+    <h2>Őrsi kihívások</h2>
+    {% if message %}
+        <p>{{message}}</p>
+    {% endif %}
+    {% for ch in patrol_challenges %}
+        {% if forloop.counter0|divisibleby:'3' %}
+        <div class="row">
             {% endif %}
+            <div class="ch-card">
+                <div class="logo"><img src="{{ch.thumb.url}}" alt="thumbnail-img"></div>
+                <div class="details">
+                    <h4 class="ch-title">{{ch.name}}</h4>
+                    <p class="ch-desc">{{ch.snippet}}</p>
+                    <p class="ch-tags">
+                        {% for t in ch.tags.all %}
+                        <span class="ch-tag">#{{t}}</span>
+                        {% endfor %}
+                    </p>
+                    <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
+                </div>
+                <!--addToList helyett removeFromList-->
+                <div class="removeFromList">
+                    <form action="{% url 'ors:mypatrol'%}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type='hidden' name='{{form.challenge.name}}' value="{{ch.pk}}">
+                        <input type='hidden' name='{{form.patrol.name}}' value="{{patrol.pk}}">
+                        <button type="submit" class="removeChallenge">Leveszem a listáról</button>
+                    </form>
+                </div>
+            </div>
+            {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
         </div>
-        <button type="submit" value="mypatrol">Mentés</button>
-    </form>
+        {% endif %}
+    {% endfor %}
 </div>
 {% endblock %}

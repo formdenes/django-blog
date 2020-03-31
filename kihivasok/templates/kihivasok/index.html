@@ -18,7 +18,7 @@
     <section class="latest-challenges">
         <h2>Legutóbbi kihívások</h2>
         {% for ch in latest_challenges %}
-        {% if forloop.counter0|divisibleby:'5' %}
+        {% if forloop.counter0|divisibleby:'3' %}
         <div class="row">
             {% endif %}
             <div class="ch-card">
@@ -44,16 +44,15 @@
                 </div>
                 {% endif %}
             </div>
-            {% if forloop.counter > 3 and forloop.counter|divisibleby:'5' %}
+            {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
         </div>
         {% endif %}
         {% endfor %}
     </section>
     <section class="top-challenges">
         <h2>Legnépszerűbb kihívásaink</h2>
-        {{top_challenges}}
         {% for ch in top_challenges %}
-        {% if forloop.counter0|divisibleby:'5' %}
+        {% if forloop.counter0|divisibleby:'3' %}
         <div class="row">
             {% endif %}
             <div class="ch-card">
@@ -79,7 +78,7 @@
                 </div>
                 {% endif %}
             </div>
-            {% if forloop.counter > 3 and forloop.counter|divisibleby:'5' %}
+            {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
         </div>
         {% endif %}
         {% endfor %}
