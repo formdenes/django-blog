@@ -41,3 +41,22 @@ class PatrolChallenge(models.Model):
     def __str__(self):
         pair = self.patrol.name + ' őrs - ' + self.challenge.name + ' kihívás'
         return pair
+
+class PatrolmemberChallenge(models.Model):
+    STATUS_OPTIONS = (
+        ('N', 'None'),
+        ('A', 'Assigned'),
+        ('F', 'Finished')
+    )
+
+    nickname = models.ForeignKey(Patrolmember, on_delete=models.CASCADE)
+    challenge = models.ForeignKey(PatrolChallenge, on_delete=models.CASCADE)
+    status = models.CharField(max_length=1, choices=STATUS_OPTIONS)
+    times = models.IntegerField()
+
+    class Meta:
+        unique_together = ('nickname', 'challenge')
+    
+    def __str__(self):
+        name = self.challenge + ' (' + self.nickname + ')'
+        return name
