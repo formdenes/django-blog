@@ -206,14 +206,14 @@ section h2 {
     display: none;
 }
 
-.addToList {
+.addToList, .removeFromList {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.addChallenge {
+.addChallenge, .removeChallenge, .linkButton {
     border: 1px solid;
     font-weight: bold;
     border-radius: 5px;
@@ -221,7 +221,7 @@ section h2 {
     padding: .25rem;
 }
 
-.addChallenge:hover {
+.addChallenge:hover, .removeChallenge:hover, .linkButton:hover {
     cursor: pointer;
     background-color: silver;
 }
