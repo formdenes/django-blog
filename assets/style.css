@@ -258,8 +258,13 @@ section h2 {
     border-radius: 50%;
 }
 
+.single-challenge-thumb.status-none{
+    background-color: lightgrey;
+    border: 3px solid gray;
+}
 .single-challenge-thumb.status-assigned{
-    border: 3px solid tomato;
+    border: 3px solid black;
+    background-color: white;
 }
 .single-challenge-thumb.status-finished{
     border: 3px solid tomato;
