@@ -2,25 +2,26 @@
 
 {% block content %}
 <h2>{{patrol}} őrs gyűjteménye</h2>
-<p>NOTE: Az oldalon az őrstagok által teljesített és számukra kijelölt kihívások fognak megjelenni</p>
-<h3>Őrstagok</h3>
-<ul>
-    {% for m in members %}
-        <li>{{m.nickname}}</li>
-    {% endfor %}
-</ul>
-<!-- <h3>Őrs kihívásainak szerkesztése</h3>
-<form action="{% url 'ors:mypatrol'%}" class="site-form" method="POST" enctype="multipart/form-data">
-    {%csrf_token%}
-    {{form_challenges.management_form}}
-    <div class="member-div">
-        {% for form in form_challenges %}
-        <div class="edit-challenge-list">{{ form }}</div>
+{% for member in members %}
+<div class="groups">
+    <h3>{{member.nickname}}</h3>
+    <div class="row card-row">
+    {% for query in collection %}
+        {% for pmc in query %}
+            {% if member == pmc.nickname %}
+            <div class="single-challenge-carddeck">
+                <div class="ch-card">
+                    <div class="logo"><img src="{{pmc.challenge.thumb.url}}" alt="{{pmc.challenge.name}}"
+                    class="single-challenge-thumb status-{{pmc.get_status_display|lower}}">
+                </div>
+                <h4 class="single-challenge-title">{{pmc.challenge.name}}</h4>
+                <p class="single-challenge-desc">{{pmc.challenge.snippet}}</p>
+                </div>
+            </div>
+            {% endif %}
         {% endfor %}
-        {% if error %}
-        <p>{{error}}</p>
-        {% endif %}
+    {% endfor %}
     </div>
-    <button type="submit" value="mypatrol">Mentés</button>
-</form> -->
+</div>
+{% endfor %}
 {% endblock %}

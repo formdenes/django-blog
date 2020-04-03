@@ -278,3 +278,25 @@ section h2 {
     border: 3px solid tomato;
     background-color: gold;
 }
+
+.single-challenge-carddeck{
+    display: flex;
+    flex-direction: row;
+}
+
+.single-challenge-carddeck .ch-card{
+    border: 1px solid black;
+    border-radius: 3px;
+    align-content: center;
+    text-align: center;
+}
+
+.row.card-row{
+    justify-content: center;
+}
+
+.card-row h3{
+    font-weight: bold;
+    text-align: center;
+    line-height: 2rem;
+}

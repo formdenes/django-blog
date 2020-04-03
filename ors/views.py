@@ -9,6 +9,7 @@ from . import forms
 from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet, EditChallengeList, EditPatrolChallenge, EditPatrolmemberChallenge
 from kihivasok.forms import RemoveChallengeFromPatrol
 from django.forms.formsets import formset_factory
+from django.db.models import Q
 
 # Create your views here.
 def csapatok(request):
@@ -129,8 +130,17 @@ def ors_patrol_collection(request):
             ret_pw = ret_patrol.secret
             ret_challenges = PatrolChallenge.objects.filter(patrol = ret_patrol)
             if pw == ret_pw:
+                #authentication successful!
+                #list assigned and finished challenges
                 members = Patrolmember.objects.filter(patrol = ret_patrol).order_by('nickname')
-                return render(request, 'patrol_collection.html', {'patrol':patrol, 'members':members, 'challenges':ret_challenges})
+                collection_list = []
+                for m in members:
+                    pmc = PatrolmemberChallenge.objects.filter(Q(nickname=m, status__in = 'A')|Q(nickname=m, status__in='F'))
+                    collection_list.append(pmc)
+                collection = collection_list[0]
+                for queryset in collection_list:
+                    collection.union(queryset)
+                return render(request, 'patrol_collection.html', {'patrol':patrol, 'members':members, 'challenges':ret_challenges, 'collection':collection_list})
             else:
                 message = "Hibás őrsi titok! Figyelj oda a kis- és nagybetűkre, Caps Lock használatára!"
                 form2 = forms.SearchPatrol()

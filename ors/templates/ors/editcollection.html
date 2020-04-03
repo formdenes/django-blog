@@ -4,7 +4,7 @@
 <section class="edit-patrolmembers">
     <h2>Őrsi gyűjtemény szerkesztése</h2>
     <div class="groups">
-        <h3>Őrsi kihívások csoportos szerkesztése #TODO</h3>
+        <h3>Őrsi kihívások csoportos szerkesztése</h3>
         <form action="{% url 'ors:editcollection'%}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <select name="challenge" id="challenge_id">
