@@ -13,10 +13,24 @@ from django.db.models import Q
 
 # Create your views here.
 def csapatok(request):
-    patrols = Patrol.objects.all().order_by('group_num')
     groups = Group.objects.all().order_by('number')
-    members = Patrolmember.objects.all()
-    return render(request, 'ors/groups.html',{'patrols':patrols, 'groups':groups,'members':members})
+    patrol_list = Patrol.objects.all().order_by('group_num')
+    group_badges = []
+    patrol_badges = []
+    for group in groups:
+        patrols = Patrol.objects.filter(group_num = group)
+        
+        group_badge_num = 0
+        for patrol in patrols:
+            pmembers = Patrolmember.objects.filter(patrol=patrol)
+            badge_num = 0
+            for m in pmembers:
+                pmc = PatrolmemberChallenge.objects.filter(nickname=m, status__in = 'F')
+                badge_num += len(pmc)
+            patrol_badges.append([patrol,badge_num])
+            group_badge_num += badge_num
+        group_badges.append([group, group_badge_num])
+    return render(request, 'ors/groups.html',{'patrols':patrol_list, 'groups':groups, 'group_badges':group_badges, 'patrol_badges':patrol_badges})
 
 @login_required(login_url='/accounts/login')
 def ors_mypatrol(request):

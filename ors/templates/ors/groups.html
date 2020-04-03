@@ -4,11 +4,23 @@
 <h2>Csapatok listája</h2>
 {% for group in groups %}
 <div class="groups">
-    <h3>{{group.number}}. cscs</h3>
+    <h3>{{group.number}}. cscs - összesen 
+        {% for gb in group_badges %}
+            {% if gb.0 == group %}
+                {{gb.1}} db kihívás
+            {% endif %}
+        {% endfor %}
+    </h3>
     {% for p in patrols %}
-    {% if p.group_num.number == group.number %}
-    <p class="patrols">{{p.name}} őrs</p>
-    {% endif %}
+        {% if p.group_num.number == group.number %}
+        <p class="patrols">{{p.name}} őrs:
+            {% for b in patrol_badges %}
+                {% if b.0 == p %}
+                    {{b.1}} db teljesített kihívás
+                {% endif %}
+            {% endfor %}
+        </p>
+        {% endif %}
     {% endfor %}
 </div>
 {% endfor %}
