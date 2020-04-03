@@ -33,6 +33,11 @@ class EditPatrolmemberChallenge(forms.Form):
     status = forms.ChoiceField(choices=STATUS_OPTIONS)
     times = forms.IntegerField()
 
+class EditPatrolChallenge(forms.Form):
+    challenge = forms.CharField()
+    status = forms.ChoiceField(choices=STATUS_OPTIONS)
+    times = forms.IntegerField()
+
 class EditPatrolmembersFormSet(BaseFormSet):
     def clean(self):
         if any(self.errors):

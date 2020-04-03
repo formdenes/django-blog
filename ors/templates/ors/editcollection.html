@@ -5,6 +5,21 @@
     <h2>Őrsi gyűjtemény szerkesztése</h2>
     <div class="groups">
         <h3>Őrsi kihívások csoportos szerkesztése #TODO</h3>
+        <form action="{% url 'ors:editcollection'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <select name="challenge" id="challenge_id">
+                {% for ch in patrol_challenges %}
+                    <option value="{{ch.challenge.pk}}">{{ch.challenge.name}}</option>
+                {% endfor %}
+            </select>
+            <select name="status" id="status">
+                {% for value, text in form_single.fields.status.choices %}
+                <option value="{{value}}">{{text}}</option>
+                {% endfor %}
+            </select>
+            {{form_mass.times}}
+            <button type="submit" value="mass" name="mass">Mentés</button>
+        </form>
     </div>
     {% for member in members %}
         <div class="groups">
@@ -17,14 +32,14 @@
                     <!-- ide formot beszúrni -->
                     <form action="{% url 'ors:editcollection'%}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input type="hidden" name="{{form.member_pk.name}}" value="{{member.pk}}">
-                        <input type="hidden" name="{{form.challenge_pk.name}}" value="{{pmc.challenge.pk}}">
+                        <input type="hidden" name="{{form_single.member_pk.name}}" value="{{member.pk}}">
+                        <input type="hidden" name="{{form_single.challenge_pk.name}}" value="{{pmc.challenge.pk}}">
                         <select name="status" id="status-{{pmc.pk}}">
-                            {% for value, text in form.fields.status.choices %}
+                            {% for value, text in form_single.fields.status.choices %}
                                 <option value="{{value}}" {% if value == pmc.status %}selected{% endif %}>{{text}}</option>
                             {% endfor %}
                         </select>
-                        <input type="number" name="{{form.times.name}}" value="{{pmc.times}}">
+                        <input type="number" name="{{form_single.times.name}}" value="{{pmc.times}}">
                         <!--<input type="number" name="times" id="times-{{pmc.pk}}" value="{{pmc.times}}" class="single-challenge-number">-->
                         <button type="submit" value="save">Mentés</button>
                     </form>

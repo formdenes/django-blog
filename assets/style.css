@@ -239,6 +239,14 @@ section h2 {
     width: 50%;
 }
 
+.single-challenge-row input[type="number"]{
+    width: 10%;
+}
+
+.single-challenge-row input{
+    /* border-radius: 3px; */
+}
+
 .single-challenge-row .single-challenge-title{
     width: 40%;
     max-width: 40%;

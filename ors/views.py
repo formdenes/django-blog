@@ -6,7 +6,7 @@ from kihivasok.models import Challenge
 from django.db import transaction, IntegrityError
 from django.contrib.auth.decorators import login_required
 from . import forms
-from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet, EditChallengeList, EditPatrolmemberChallenge
+from .forms import SearchPatrol, EditPatrol, EditPatrolmembers, EditPatrolmembersFormSet, EditChallengeList, EditPatrolChallenge, EditPatrolmemberChallenge
 from kihivasok.forms import RemoveChallengeFromPatrol
 from django.forms.formsets import formset_factory
 
@@ -180,29 +180,43 @@ def ors_editcollection(request):
     user = request.user
     patrol = Patrol.objects.filter(group_leader = user)
     members = Patrolmember.objects.filter(patrol=patrol[0]).order_by('nickname')
-    full_collection = PatrolmemberChallenge.objects.filter().order_by('nickname__nickname')
+    full_collection = PatrolmemberChallenge.objects.filter().order_by('nickname__nickname').order_by('challenge__name')
+    patrol_challenges = PatrolChallenge.objects.filter(patrol=patrol[0]).order_by('challenge__name')
     if request.method == "POST":
-        form = EditPatrolmemberChallenge(request.POST)
-        if form.is_valid():
-            member_pk = form.cleaned_data['member_pk']
-            challenge_pk = form.cleaned_data['challenge_pk']
-            status = form.cleaned_data['status']
-            times = form.cleaned_data['times']
-            nickname = Patrolmember.objects.get(pk=member_pk)
-            challenge = Challenge.objects.get(pk=challenge_pk)
-            pmc = PatrolmemberChallenge.objects.get(nickname=nickname, challenge=challenge)
-            pmc.status = status
-            pmc.times = times
-            # if pmc.times >0 and 'F' not in pmc.status:
-            #     # solve it with JS!
-            #     message = "A státusznak befejezettnek kell lennie!"
-            #     return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form': form, 'message': message})
-            # else:
-            pmc.save()
-            return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form': form})
+        form_mass = EditPatrolChallenge(request.POST)
+        form_single = EditPatrolmemberChallenge(request.POST)
+        if "mass" in request.POST:
+            #form_mass
+            if form_mass.is_valid():
+                challenge_rec = form_mass.cleaned_data['challenge']
+                status_rec = form_mass.cleaned_data['status']
+                times_rec = form_mass.cleaned_data['times']
+                for m in members:
+                    pmc = PatrolmemberChallenge.objects.get(challenge__pk=challenge_rec, nickname=m)
+                    pmc.status = status_rec
+                    pmc.times = times_rec
+                    pmc.save()
+                return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form_single': form_single, 'form_mass': form_mass, 'patrol_challenges': patrol_challenges})
+            else:
+                message = form_mass.errors
         else:
-            message = form.errors
-            return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form': form, 'message':message})
+            #form_single
+            if form_single.is_valid():
+                member_pk = form_single.cleaned_data['member_pk']
+                challenge_pk = form_single.cleaned_data['challenge_pk']
+                status = form_single.cleaned_data['status']
+                times = form_single.cleaned_data['times']
+                nickname = Patrolmember.objects.get(pk=member_pk)
+                challenge = Challenge.objects.get(pk=challenge_pk)
+                pmc = PatrolmemberChallenge.objects.get(nickname=nickname, challenge=challenge)
+                pmc.status = status
+                pmc.times = times
+                pmc.save()
+                return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form_single': form_single, 'form_mass':form_mass, 'patrol_challenges':patrol_challenges})
+            else:
+                message = form_single.errors
+        return render(request, 'ors/editcollection.html', {'full_collection': full_collection, 'members': members, 'form_single': form_single, 'form_mass':form_mass, 'patrol_challenges':patrol_challenges, 'message':message})
     else:
-        form = forms.EditPatrolmemberChallenge()
-    return render(request, 'ors/editcollection.html', {'full_collection':full_collection, 'members':members, 'form':form})
+        form_single = forms.EditPatrolmemberChallenge()
+        form_mass = forms.EditPatrolChallenge()
+    return render(request, 'ors/editcollection.html', {'full_collection':full_collection, 'members':members, 'form_single':form_single, 'form_mass':form_mass, 'patrol_challenges':patrol_challenges})
