@@ -48,15 +48,18 @@ def setdata_view(request):
         form = RegisterProfileData(request.POST)
         if form.is_valid():
             user = request.user
-            group_num = form.cleaned_data['group_num']
+            group = form.cleaned_data['group']
             patrol_name = form.cleaned_data['patrol']
             secret = form.cleaned_data['secret']
-            Profile.objects.create(user=user, group_num=group_num, patrol=patrol_name, secret=secret)
-            group = Group.objects.filter(number=group_num)
+            profile = Profile.objects.get(user=user)
+            profile.group=group
+            profile.patrol=patrol_name
+            profile.secret=secret
+            profile.save()
             #check if group exists
             if group:
                 #group already exists, check patrol
-                patrol = patrol.objects.filter(group_num=group, name=patrol_name)
+                patrol = Patrol.objects.filter(group_num=group, name=patrol_name)
                 if patrol:
                     #patrol already exists, error
                     message="Ez az őrs már létezik ebben a csapatban!"
@@ -64,12 +67,12 @@ def setdata_view(request):
                 else:
                     #create patrol
                     Patrol.objects.create(name=patrol_name, group_num=group, secret=secret, group_leader=user)
-                    return redirect('home')
+                    return redirect('ors:mypatrol')
             else:
-                #create group
+                #create group -> solve this option later
                 new_group = Group.objects.create(number=group_num)
                 Patrol.objects.create(name=patrol_name, group_num=new_group, secret=secret, group_leader=user)
-            return redirect('home')
+            return redirect('ors:mypatrol')
         else:
             message = form.errors
             return render(request, 'accounts/setdata.html', {'form': form, 'errors':message})
@@ -78,5 +81,4 @@ def setdata_view(request):
 @login_required(login_url='/accounts/login')
 def profile_view(request):
     data = Profile.objects.get(user=request.user)
-    form = forms.RegisterProfileData(initial={'group_num':data.group_num, 'patrol':data.patrol, 'secret':data.secret})
-    return render(request, 'accounts/viewdata.html', {'form': form})
+    return render(request, 'accounts/viewdata.html', {'group': data.group, 'patrol':data.patrol})

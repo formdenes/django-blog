@@ -5,12 +5,16 @@
 <div class="groups">
     <h3>Őrs neve: {{patrol.name}} őrs</h3>
     <h3>Őrsi titok: {{patrol.secret}}</h3>
+    {% if members %}
     <h3>Őrstagok:</h3>
     <ul>
         {% for m in members %}
             <li>{{m.nickname}}</li>
         {% endfor %}
     </ul>
+    {% else %}
+    <p class="alert-message">Add hozzá az őrstagjaidat az "Őrstagok szerkesztése" gombbal!</p>
+    {% endif %}
     <a href="{% url 'ors:editpatrol' %}"><button class="linkButton">Őrs adatainak szerkesztése</button></a>
     <a href="{% url 'ors:editpatrolmembers' %}"><button class="linkButton">Őrstagok szerkesztése</button></a>
 </div>
@@ -33,7 +37,7 @@
                         <span class="ch-tag">#{{t}}</span>
                         {% endfor %}
                     </p>
-                    <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
+                    <p class="ch-author">Kihívást létrehozta: <em>{{ch.creator}}</em></p>
                 </div>
                 <!--addToList helyett removeFromList-->
                 <div class="removeFromList">
