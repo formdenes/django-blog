@@ -67,12 +67,12 @@ def setdata_view(request):
                 else:
                     #create patrol
                     Patrol.objects.create(name=patrol_name, group_num=group, secret=secret, group_leader=user)
-                    return redirect('home')
+                    return redirect('ors:mypatrol')
             else:
                 #create group -> solve this option later
                 new_group = Group.objects.create(number=group_num)
                 Patrol.objects.create(name=patrol_name, group_num=new_group, secret=secret, group_leader=user)
-            return redirect('home')
+            return redirect('ors:mypatrol')
         else:
             message = form.errors
             return render(request, 'accounts/setdata.html', {'form': form, 'errors':message})
