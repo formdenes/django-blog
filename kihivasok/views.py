@@ -131,6 +131,16 @@ def kereses(request):
             form_search = forms.SearchChallenge()
     return render(request, "search_challenge.html", {'form_search':form_search})
 
+def tag_search(request):
+    tag_form = forms.SearchChallenge(request.POST)
+    if tag_form.is_valid():
+        tags = tag_form.cleaned_data['search_text']
+        tags = tags.split()
+        results = Challenge.objects.filter(tags__name__in=tags).distinct()
+        return render(request, 'search_challenge.html', {'form_search':tag_form, 'results':results})
+    else:
+        return redirect('index')
+
 def index(request):
     actual_news = NewsPost.objects.filter(actual=True).order_by('-timestamp')
     # top_challenges = Challenge.objects.annotate(ch_count=Count('id')).order_by('-ch_count')[:3]

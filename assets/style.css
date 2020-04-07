@@ -296,3 +296,17 @@ section h2 {
     text-align: center;
     line-height: 2rem;
 }
+
+.tagform{
+    display: inline-block;
+}
+
+.tagbutton{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.tagbutton .ch-tag:hover{
+    background-color: rgb(0,107,45);
+}

@@ -7,5 +7,6 @@ urlpatterns = [
     path('create/', views.challenge_create, name='create'),
     path('mylist/', views.challenge_mylist, name='mylist'),
     path('list/', views.challenge_list, name='list'),
+    path('tagsearch/', views.tag_search, name='tagsearch'),
     path('', views.challenge_list, name='challengelist'),
 ]
