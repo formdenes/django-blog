@@ -42,7 +42,6 @@ def challenge_list(request):
 class ChallengeDetailView(DetailView):
     model= Challenge
     template_name = 'kihivasok/challenge_detail.html'
-
 @login_required(login_url='/accounts/login')
 def challenge_mylist(request):
     current_user = request.user

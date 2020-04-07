@@ -3,8 +3,10 @@
 {% block content %}
 <h2>Csapatok listája</h2>
 {% for group in groups %}
-<div class="groups">
-    <h3>{{group.number}}. cscs - összesen 
+{% for num in patrol_number %}
+    {% if num.0 == group and num.1 > 0 %}
+        <div class="groups">
+    <h3>{{group}} - összesen 
         {% for gb in group_badges %}
             {% if gb.0 == group %}
                 {{gb.1}} db kihívás
@@ -22,6 +24,8 @@
         </p>
         {% endif %}
     {% endfor %}
-</div>
+    </div>
+    {% endif %}
+{% endfor %}
 {% endfor %}
 {% endblock %}

@@ -15,11 +15,17 @@ from django.db.models import Q
 def csapatok(request):
     groups = Group.objects.all().order_by('number')
     patrol_list = Patrol.objects.all().order_by('group_num')
+    patrol_number = []
+    for g in groups:
+        counter = 0
+        for p in patrol_list:
+            if p.group_num == g:
+                counter +=1
+        patrol_number.append([g,counter])
     group_badges = []
     patrol_badges = []
     for group in groups:
         patrols = Patrol.objects.filter(group_num = group)
-        
         group_badge_num = 0
         for patrol in patrols:
             pmembers = Patrolmember.objects.filter(patrol=patrol)
@@ -30,7 +36,7 @@ def csapatok(request):
             patrol_badges.append([patrol,badge_num])
             group_badge_num += badge_num
         group_badges.append([group, group_badge_num])
-    return render(request, 'ors/groups.html',{'patrols':patrol_list, 'groups':groups, 'group_badges':group_badges, 'patrol_badges':patrol_badges})
+    return render(request, 'ors/groups.html',{'patrols':patrol_list, 'groups':groups, 'group_badges':group_badges, 'patrol_badges':patrol_badges, 'patrol_number':patrol_number})
 
 @login_required(login_url='/accounts/login')
 def ors_mypatrol(request):

@@ -1,0 +1,870 @@
+[
+  {
+    "number": 0,
+    "name": "Iroda"
+  },
+  {
+    "number": 1,
+    "name": "BKIE Szilassy Aladár"
+  },
+  {
+    "number": 2,
+    "name": "Sík Sándor"
+  },
+  {
+    "number": 4,
+    "name": "BIK"
+  },
+  {
+    "number": 10,
+    "name": "PÁR gr.Széchenyi István"
+  },
+  {
+    "number": 14,
+    "name": "Holló"
+  },
+  {
+    "number": 15,
+    "name": " Bethlen Gábor"
+  },
+  {
+    "number": 16,
+    "name": "Martin György (E.G.)"
+  },
+  {
+    "number": 19,
+    "name": "Bükk"
+  },
+  {
+    "number": 25,
+    "name": "Szent Imre"
+  },
+  {
+    "number": 32,
+    "name": "Dévai Bíró Mátyás"
+  },
+  {
+    "number": 33,
+    "name": "gróf Széchenyi István"
+  },
+  {
+    "number": 37,
+    "name": "Magyarok Nagyasszonya"
+  },
+  {
+    "number": 43,
+    "name": "Főnix"
+  },
+  {
+    "number": 46,
+    "name": "Kapisztrán Szent János"
+  },
+  {
+    "number": 47,
+    "name": "Szent László király"
+  },
+  {
+    "number": 50,
+    "name": "Hunyadi"
+  },
+  {
+    "number": 51,
+    "name": "Sík Sándor"
+  },
+  {
+    "number": 58,
+    "name": "Hollós Mátyás"
+  },
+  {
+    "number": 63,
+    "name": "Bessenyei György"
+  },
+  {
+    "number": 66,
+    "name": "Báthory László"
+  },
+  {
+    "number": 70,
+    "name": "Széchenyi István"
+  },
+  {
+    "number": 71,
+    "name": "Zrínyi Miklós"
+  },
+  {
+    "number": 85,
+    "name": "Zrínyi Miklós"
+  },
+  {
+    "number": 93,
+    "name": "Erő"
+  },
+  {
+    "number": 96,
+    "name": "Sólyom"
+  },
+  {
+    "number": 100,
+    "name": " Baden-Powell"
+  },
+  {
+    "number": 101,
+    "name": "Tomori Pál"
+  },
+  {
+    "number": 104,
+    "name": "Bethlen Gábor"
+  },
+  {
+    "number": 105,
+    "name": " IV. Béla"
+  },
+  {
+    "number": 112,
+    "name": "Kubinyi Zoltán"
+  },
+  {
+    "number": 116,
+    "name": "gr. Teleki Pál"
+  },
+  {
+    "number": 118,
+    "name": "Kalazancius"
+  },
+  {
+    "number": 119,
+    "name": "Kaszap István"
+  },
+  {
+    "number": 121,
+    "name": "dr Vetéssy Géza"
+  },
+  {
+    "number": 126,
+    "name": "Szent Imre"
+  },
+  {
+    "number": 129,
+    "name": "Soós Gábor"
+  },
+  {
+    "number": 133,
+    "name": "Szent György"
+  },
+  {
+    "number": 140,
+    "name": "Pro Patria"
+  },
+  {
+    "number": 144,
+    "name": "Kossuth Lajos"
+  },
+  {
+    "number": 148,
+    "name": "Nagyboldogasszony"
+  },
+  {
+    "number": 165,
+    "name": "Jókai Mór"
+  },
+  {
+    "number": 173,
+    "name": "Kemény Zsigmond"
+  },
+  {
+    "number": 175,
+    "name": "Bocskai"
+  },
+  {
+    "number": 188,
+    "name": "Shvoy Lajos"
+  },
+  {
+    "number": 192,
+    "name": "Erdősi Imre"
+  },
+  {
+    "number": 196,
+    "name": "Damjanich János"
+  },
+  {
+    "number": 205,
+    "name": "Zrínyi Miklós"
+  },
+  {
+    "number": 212,
+    "name": "Bornemissza Gergely"
+  },
+  {
+    "number": 217,
+    "name": "Keresztény Munkás Ifjú"
+  },
+  {
+    "number": 221,
+    "name": "Anonymus"
+  },
+  {
+    "number": 231,
+    "name": "Méliusz"
+  },
+  {
+    "number": 251,
+    "name": "Rákóczi"
+  },
+  {
+    "number": 264,
+    "name": "Hunyadi János"
+  },
+  {
+    "number": 270,
+    "name": "Hajnal"
+  },
+  {
+    "number": 285,
+    "name": "Szent László"
+  },
+  {
+    "number": 289,
+    "name": "dr. Monszpart László"
+  },
+  {
+    "number": 293,
+    "name": "Szent Kapisztrán"
+  },
+  {
+    "number": 298,
+    "name": "Lehel vezér"
+  },
+  {
+    "number": 301,
+    "name": "Kazinczy Ferenc"
+  },
+  {
+    "number": 304,
+    "name": "Kőrösi Csoma Sándor"
+  },
+  {
+    "number": 305,
+    "name": "Szent István"
+  },
+  {
+    "number": 309,
+    "name": "Assisi Szent Ferenc"
+  },
+  {
+    "number": 313,
+    "name": "Szent József"
+  },
+  {
+    "number": 314,
+    "name": "Czuczor Gergely"
+  },
+  {
+    "number": 320,
+    "name": "Nimród"
+  },
+  {
+    "number": 336,
+    "name": "Karácsony Sándor"
+  },
+  {
+    "number": 350,
+    "name": "Szent Márton"
+  },
+  {
+    "number": 353,
+    "name": "Chernel István"
+  },
+  {
+    "number": 359,
+    "name": "Vajda Ödön"
+  },
+  {
+    "number": 362,
+    "name": "Szent Mihály"
+  },
+  {
+    "number": 364,
+    "name": "Scarbantia"
+  },
+  {
+    "number": 379,
+    "name": "Feltámadás"
+  },
+  {
+    "number": 387,
+    "name": "Szily János"
+  },
+  {
+    "number": 392,
+    "name": "Lesence"
+  },
+  {
+    "number": 400,
+    "name": "Szent Péter és Pál"
+  },
+  {
+    "number": 401,
+    "name": "Szent János"
+  },
+  {
+    "number": 412,
+    "name": "Kalazanti Szent József"
+  },
+  {
+    "number": 426,
+    "name": "Szenczi Molnár Albert"
+  },
+  {
+    "number": 431,
+    "name": "Huenergardt János"
+  },
+  {
+    "number": 432,
+    "name": "Pázmány Péter"
+  },
+  {
+    "number": 433,
+    "name": "Szent Bernát"
+  },
+  {
+    "number": 439,
+    "name": "Boldogasszony"
+  },
+  {
+    "number": 442,
+    "name": "Báthory László"
+  },
+  {
+    "number": 443,
+    "name": "Szent László"
+  },
+  {
+    "number": 452,
+    "name": "Szent Bernát"
+  },
+  {
+    "number": 453,
+    "name": "Wathay Ferenc"
+  },
+  {
+    "number": 457,
+    "name": "Prohászka Ottokár"
+  },
+  {
+    "number": 459,
+    "name": "Győry Vilmos"
+  },
+  {
+    "number": 466,
+    "name": "Magyar Tenger"
+  },
+  {
+    "number": 486,
+    "name": "Bátorkeszi István"
+  },
+  {
+    "number": 519,
+    "name": "Bálint Sándor"
+  },
+  {
+    "number": 543,
+    "name": "Csaba királyfi"
+  },
+  {
+    "number": 547,
+    "name": "Belon Gellért"
+  },
+  {
+    "number": 550,
+    "name": "Márton Áron"
+  },
+  {
+    "number": 552,
+    "name": "Petneházy Dávid"
+  },
+  {
+    "number": 553,
+    "name": "Szent Imre herceg"
+  },
+  {
+    "number": 554,
+    "name": "Kerkai Jenő"
+  },
+  {
+    "number": 567,
+    "name": "Mészáros Lázár"
+  },
+  {
+    "number": 582,
+    "name": "Attila"
+  },
+  {
+    "number": 604,
+    "name": "Szent Mór"
+  },
+  {
+    "number": 608,
+    "name": "Schola Caritatis"
+  },
+  {
+    "number": 610,
+    "name": "Mindszenty Bíboros"
+  },
+  {
+    "number": 622,
+    "name": "Gaal Gaston"
+  },
+  {
+    "number": 647,
+    "name": "Tomori Pál"
+  },
+  {
+    "number": 648,
+    "name": "Soli Deo Gloria"
+  },
+  {
+    "number": 670,
+    "name": "Zengő"
+  },
+  {
+    "number": 673,
+    "name": "Pius"
+  },
+  {
+    "number": 681,
+    "name": "Assisi Szent Ferenc "
+  },
+  {
+    "number": 696,
+    "name": "Wesley János"
+  },
+  {
+    "number": 708,
+    "name": "Rómer Flóris"
+  },
+  {
+    "number": 722,
+    "name": "Öveges József"
+  },
+  {
+    "number": 724,
+    "name": "Kossuth Lajos"
+  },
+  {
+    "number": 735,
+    "name": "Reményik Sándor"
+  },
+  {
+    "number": 736,
+    "name": "Szent György"
+  },
+  {
+    "number": 750,
+    "name": "Nagy Lajos király"
+  },
+  {
+    "number": 757,
+    "name": "Szemere Bertalan"
+  },
+  {
+    "number": 763,
+    "name": "Sztárai Mihály"
+  },
+  {
+    "number": 768,
+    "name": "Csepellény György"
+  },
+  {
+    "number": 775,
+    "name": "Hunyadi János"
+  },
+  {
+    "number": 784,
+    "name": "Erő"
+  },
+  {
+    "number": 786,
+    "name": "Szent György"
+  },
+  {
+    "number": 787,
+    "name": "Perényi Péter"
+  },
+  {
+    "number": 789,
+    "name": "Kapisztrán Szent János"
+  },
+  {
+    "number": 792,
+    "name": "Bocskai István"
+  },
+  {
+    "number": 799,
+    "name": "Ernye bán"
+  },
+  {
+    "number": 800,
+    "name": "Solymár"
+  },
+  {
+    "number": 802,
+    "name": "Szent Korona"
+  },
+  {
+    "number": 808,
+    "name": "Mindszenty József"
+  },
+  {
+    "number": 811,
+    "name": "Szent József"
+  },
+  {
+    "number": 812,
+    "name": "Csaba vezér"
+  },
+  {
+    "number": 813,
+    "name": "Prohászka Ottokár"
+  },
+  {
+    "number": 815,
+    "name": "IV. Béla király"
+  },
+  {
+    "number": 821,
+    "name": "Szent Erzsébet"
+  },
+  {
+    "number": 823,
+    "name": "Mátyás király"
+  },
+  {
+    "number": 827,
+    "name": "Szent László"
+  },
+  {
+    "number": 831,
+    "name": "Szent Kristóf"
+  },
+  {
+    "number": 832,
+    "name": "Havas Boldogasszony"
+  },
+  {
+    "number": 836,
+    "name": "gróf Teleki László"
+  },
+  {
+    "number": 842,
+    "name": "Benedek Elek"
+  },
+  {
+    "number": 857,
+    "name": "Szent Erzsébet"
+  },
+  {
+    "number": 871,
+    "name": "Szent Imre"
+  },
+  {
+    "number": 878,
+    "name": "Hatvani Pál"
+  },
+  {
+    "number": 882,
+    "name": " Mátyási János"
+  },
+  {
+    "number": 902,
+    "name": "Kucsera Ferenc"
+  },
+  {
+    "number": 903,
+    "name": "Prohászka Ottokár"
+  },
+  {
+    "number": 914,
+    "name": "Endre"
+  },
+  {
+    "number": 923,
+    "name": " Pázmány Péter"
+  },
+  {
+    "number": 928,
+    "name": "Erő"
+  },
+  {
+    "number": 929,
+    "name": "Szent Mihály"
+  },
+  {
+    "number": 937,
+    "name": "Szent Tarzicius"
+  },
+  {
+    "number": 944,
+    "name": "Szent Borbála"
+  },
+  {
+    "number": 950,
+    "name": "Szent Gellért"
+  },
+  {
+    "number": 955,
+    "name": "Gróf Csákyné Wesselényi Anna"
+  },
+  {
+    "number": 961,
+    "name": "Sztárai Mihály"
+  },
+  {
+    "number": 991,
+    "name": "Révész Imre"
+  },
+  {
+    "number": 992,
+    "name": "Hajdú"
+  },
+  {
+    "number": 1000,
+    "name": "Szent Korona"
+  },
+  {
+    "number": 1001,
+    "name": "Szent Anna"
+  },
+  {
+    "number": 1002,
+    "name": "Néri Szent Fülöp"
+  },
+  {
+    "number": 1004,
+    "name": "Szent Anna"
+  },
+  {
+    "number": 1005,
+    "name": "Don Bosco Szent János"
+  },
+  {
+    "number": 1006,
+    "name": "Marianum"
+  },
+  {
+    "number": 1008,
+    "name": "Orinoco"
+  },
+  {
+    "number": 1019,
+    "name": "Csaba királyfi"
+  },
+  {
+    "number": 1020,
+    "name": "PÁKICS"
+  },
+  {
+    "number": 1026,
+    "name": "Szent László Király"
+  },
+  {
+    "number": 1032,
+    "name": "Kaszap István"
+  },
+  {
+    "number": 1044,
+    "name": "Róder Imre"
+  },
+  {
+    "number": 1048,
+    "name": "Greszl Ferenc"
+  },
+  {
+    "number": 1104,
+    "name": "II. János Pál"
+  },
+  {
+    "number": 1106,
+    "name": "Szent Bernát"
+  },
+  {
+    "number": 1108,
+    "name": "Szent Tarzíciusz"
+  },
+  {
+    "number": 1111,
+    "name": "Szent István"
+  },
+  {
+    "number": 1112,
+    "name": "Szent Miklós"
+  },
+  {
+    "number": 1117,
+    "name": "Szent Imre"
+  },
+  {
+    "number": 1119,
+    "name": "Árpád vezér"
+  },
+  {
+    "number": 1121,
+    "name": "Földváry-Boér Elemér"
+  },
+  {
+    "number": 1203,
+    "name": "Mailáth püspök"
+  },
+  {
+    "number": 1208,
+    "name": "Magyary Károly"
+  },
+  {
+    "number": 1212,
+    "name": "Szent Ilona"
+  },
+  {
+    "number": 1220,
+    "name": "Szent Imre herceg"
+  },
+  {
+    "number": 1222,
+    "name": "Tarródy István"
+  },
+  {
+    "number": 1223,
+    "name": "Tisza"
+  },
+  {
+    "number": 1227,
+    "name": "Pray György"
+  },
+  {
+    "number": 1232,
+    "name": "I. Rákóczi György"
+  },
+  {
+    "number": 1300,
+    "name": "Brenner János"
+  },
+  {
+    "number": 1301,
+    "name": "Négylevelű Fa"
+  },
+  {
+    "number": 1402,
+    "name": "Szent Imre"
+  },
+  {
+    "number": 1406,
+    "name": "Szent Miklós"
+  },
+  {
+    "number": 1412,
+    "name": "Skrihár József"
+  },
+  {
+    "number": 1414,
+    "name": "Gellért püspök"
+  },
+  {
+    "number": 1415,
+    "name": "IV. Károly"
+  },
+  {
+    "number": 1426,
+    "name": "Csillagösvény"
+  },
+  {
+    "number": 1507,
+    "name": "Árpádházi Szent Margit"
+  },
+  {
+    "number": 1509,
+    "name": "Szent László"
+  },
+  {
+    "number": 1511,
+    "name": "Dugovics Titusz"
+  },
+  {
+    "number": 1515,
+    "name": "Gróf Széchényi Miklós"
+  },
+  {
+    "number": 1604,
+    "name": "II. Lajos király"
+  },
+  {
+    "number": 1615,
+    "name": "Assisi Szent Ferenc"
+  },
+  {
+    "number": 1808,
+    "name": "Don Bosco"
+  },
+  {
+    "number": 1809,
+    "name": "Boldog Özséb"
+  },
+  {
+    "number": 1810,
+    "name": "Ádám Kálmán"
+  },
+  {
+    "number": 1811,
+    "name": "Fekete István"
+  },
+  {
+    "number": 1812,
+    "name": "Szent Vendel"
+  },
+  {
+    "number": 1813,
+    "name": "Szent Mihály"
+  },
+  {
+    "number": 1881,
+    "name": "Remény"
+  },
+  {
+    "number": 1903,
+    "name": "Dávid"
+  },
+  {
+    "number": 1907,
+    "name": "Tárkányi Béla"
+  },
+  {
+    "number": 1909,
+    "name": "Prohászka Ottokár"
+  },
+  {
+    "number": 1918,
+    "name": "Xántus János"
+  },
+  {
+    "number": 1926,
+    "name": "Szent Erzsébet"
+  },
+  {
+    "number": 1942,
+    "name": "Michnay László"
+  },
+  {
+    "number": 1945,
+    "name": "Reményik Sándor"
+  },
+  {
+    "number": 1975,
+    "name": "Rozgonyi Cicelle"
+  },
+  {
+    "number": 1998,
+    "name": "Szenczi Molnár Albert"
+  },
+  {
+    "number": 1999,
+    "name": "Szent Angéla"
+  }
+]
