@@ -2,10 +2,12 @@
 
 {% block content %}
 <h1>Álltsd be a profilod adatait!</h1>
+<h3>Kérünk, alaposan ellenőrizd az adataidat, azokat a jövőben már nem fogod tudni megváltoztatni!</h3>
 <form class="site-form" action="{% url 'accounts:setdata' %}" method="POST">
     {% csrf_token %}
     {{form}}
     <button type="submit">Kész, tovább az oldalra!</button>
+    <!--TODO JS: biztos, hogy elmenti ezeket az adatokat?-->
 </form>
 {% if errors %}
     {{errors}}

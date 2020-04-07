@@ -2,11 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from accounts.models import Profile
+from django.utils.text import slugify
+from django.urls import reverse
 
 # Create your models here.
 class Challenge(models.Model):
     name = models.CharField(max_length=50)
     desc = models.TextField()
+    slug = models.SlugField()
     timestamp = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager()
     promoted = models.BooleanField()
@@ -21,6 +24,14 @@ class Challenge(models.Model):
         if len(self.desc) <200:
             return self.desc
         return self.desc[:200] + "..."
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+
+        super(Challenge, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('challenge:challenge_detail', kwargs={'slug':self.slug})
 
 class NewsPost(models.Model):
     header = models.CharField(max_length=100)

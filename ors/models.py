@@ -9,9 +9,10 @@ from taggit.managers import TaggableManager
 # Create your models here.
 class Group(models.Model):
     number = models.IntegerField(unique=True)
+    name = models.CharField(max_length=100, blank=True, default=None, null=True)
 
     def __str__(self):
-        return str(self.number)
+        return str(self.number) + ". %s cscs." % self.name
 
 class Patrol(models.Model):
     name = models.CharField(max_length=50)

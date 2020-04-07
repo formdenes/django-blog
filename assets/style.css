@@ -109,6 +109,10 @@ nav ul li {
     cursor: pointer;
 }
 
+.ch-title a, .ch-title a:hover{
+    color:black;
+}
+
 .ch-card .details {
     display: flex;
     flex-direction: column;

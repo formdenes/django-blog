@@ -9,6 +9,7 @@ from . import forms
 from .forms import AddChallengeToPatrol
 from django.db.models.functions import Lower
 from django.db.models import Q, Count
+from django.views.generic import DetailView
 
 # Create your views here.
 def challenge_list(request):
@@ -37,6 +38,10 @@ def challenge_list(request):
         return render(request, 'kihivasok/challenge_list.html', {'challenge':ch, 'form':form})
     else:
         return render(request, 'kihivasok/challenge_list.html', {'challenge':ch})
+
+class ChallengeDetailView(DetailView):
+    model= Challenge
+    template_name = 'kihivasok/challenge_detail.html'
 
 @login_required(login_url='/accounts/login')
 def challenge_mylist(request):
