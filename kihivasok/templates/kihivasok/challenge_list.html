@@ -10,7 +10,7 @@
         <div class="ch-card">
             <div class="logo"><img src="{{ch.thumb.url}}" alt="thumbnail-img"></div>
             <div class="details">
-                <h4 class="ch-title">{{ch.name}}</h4>
+                <h4 class="ch-title"><a href="{{ch.get_absolute_url}}">{{ch.name}}</a></h4>
                 <p class="ch-desc">{{ch.snippet}}</p>
                 <div class="ch-tags">
                     {% for t in ch.tags.all %}

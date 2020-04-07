@@ -1,0 +1,36 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="groups">
+    <div class="ch-card">
+        <div class="logo"><img src="{{object.thumb.url}}" alt="thumbnail-img"></div>
+        <div class="details">
+            <h4 class="ch-title">{{object.name}}</h4>
+            <p class="ch-desc">{{object.desc}}</p>
+            <div class="ch-tags">
+                {% for t in object.tags.all %}
+                <form action="{% url 'challenge:tagsearch'%}" method="post" class="tagform">
+                    {% csrf_token %}
+                    <input type="hidden" name="search_text" value="{{t}}">
+                    <button type="submit" class="tagbutton"><span class="ch-tag">#{{t}}</span></button>
+                </form>
+                {% endfor %}
+            </div>
+            <p class="ch-author">Kihívást létrehozta: <em>{{object.creator}}</em></p>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="addToList">
+            <form action="{% url 'challenge:list'%}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type='hidden' name='{{form.challenge.name}}' value="{{object.pk}}">
+                <input type='hidden' name='{{form.patrol.name}}' value="{{form.patrol.value}}">
+                <button type="submit" class="addChallenge">Hozzáadom az őrsi listámhoz</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    {% if forloop.counter > 3 and forloop.counter|divisibleby:'3' %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
