@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from . import forms
 from .forms import RegisterProfileData
 from .models import Profile
@@ -73,3 +74,9 @@ def setdata_view(request):
             message = form.errors
             return render(request, 'accounts/setdata.html', {'form': form, 'errors':message})
     return render(request, 'accounts/setdata.html', {'form':form})
+
+@login_required(login_url='/accounts/login')
+def profile_view(request):
+    data = Profile.objects.get(user=request.user)
+    form = forms.RegisterProfileData(initial={'group_num':data.group_num, 'patrol':data.patrol, 'secret':data.secret})
+    return render(request, 'accounts/viewdata.html', {'form': form})
