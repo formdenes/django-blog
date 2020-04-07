@@ -51,11 +51,15 @@ def setdata_view(request):
             group = form.cleaned_data['group']
             patrol_name = form.cleaned_data['patrol']
             secret = form.cleaned_data['secret']
-            Profile.objects.create(user=user, group=group, patrol=patrol_name, secret=secret)
+            profile = Profile.objects.get(user=user)
+            profile.group=group
+            profile.patrol=patrol_name
+            profile.secret=secret
+            profile.save()
             #check if group exists
             if group:
                 #group already exists, check patrol
-                patrol = patrol.objects.filter(group_num=group, name=patrol_name)
+                patrol = Patrol.objects.filter(group_num=group, name=patrol_name)
                 if patrol:
                     #patrol already exists, error
                     message="Ez az őrs már létezik ebben a csapatban!"
