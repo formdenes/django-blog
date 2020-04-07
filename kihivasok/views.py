@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Challenge, NewsPost
+from accounts.models import Profile
 from ors.models import Patrol, PatrolChallenge
 from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
@@ -51,6 +52,8 @@ def challenge_create(request):
             #save article to db
             instance = form.save(commit=False)
             instance.created_by = request.user
+            creator = Profile.objects.get(user=request.user)
+            instance.creator = creator
             instance.save()
             form.save_m2m()
             return redirect('challenge:challengelist')
@@ -152,8 +155,9 @@ def index(request):
     latest_challenges = Challenge.objects.filter(promoted = True).order_by('timestamp')[:3]
     user = request.user
     if user.is_authenticated:
-        patrol = Patrol.objects.get(group_leader=user)
-        patrol_id = patrol.id
+        patrol = Patrol.objects.filter(group_leader=user)
+        if patrol:
+            patrol_id = patrol[0].id
         if request.method == 'POST':
             form = AddChallengeToPatrol(request.POST)
             if form.is_valid():
@@ -171,8 +175,10 @@ def index(request):
                     pass
                 return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges, 'form': form})
         else:
-            form = AddChallengeToPatrol(initial={'patrol': patrol_id})
-        return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges, 'form': form})
+            if patrol:
+                form = AddChallengeToPatrol(initial={'patrol': patrol_id})
+                return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges, 'form': form})
+            return render(request, 'kihivasok/index.html', {'actual_news': actual_news, 'latest_challenges': latest_challenges, 'top_challenges': top_challenges})
     else:
         return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges})
 

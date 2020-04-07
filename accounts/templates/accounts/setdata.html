@@ -1,0 +1,13 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h1>Álltsd be a profilod adatait!</h1>
+<form class="site-form" action="{% url 'accounts:setdata' %}" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Kész, tovább az oldalra!</button>
+</form>
+{% if errors %}
+    {{errors}}
+{% endif %}
+{% endblock %}
