@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
+from accounts.models import Profile
 
 # Create your models here.
 class Challenge(models.Model):
@@ -12,6 +13,7 @@ class Challenge(models.Model):
     add_to_patrol = models.BooleanField(default=True)
     thumb = models.ImageField(default="default.png", blank=True)
     created_by = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    creator = models.ForeignKey(Profile, null=True, default=None, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
