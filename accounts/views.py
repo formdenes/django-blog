@@ -48,11 +48,10 @@ def setdata_view(request):
         form = RegisterProfileData(request.POST)
         if form.is_valid():
             user = request.user
-            group_num = form.cleaned_data['group_num']
+            group = form.cleaned_data['group']
             patrol_name = form.cleaned_data['patrol']
             secret = form.cleaned_data['secret']
-            Profile.objects.create(user=user, group_num=group_num, patrol=patrol_name, secret=secret)
-            group = Group.objects.filter(number=group_num)
+            Profile.objects.create(user=user, group=group, patrol=patrol_name, secret=secret)
             #check if group exists
             if group:
                 #group already exists, check patrol
@@ -66,7 +65,7 @@ def setdata_view(request):
                     Patrol.objects.create(name=patrol_name, group_num=group, secret=secret, group_leader=user)
                     return redirect('home')
             else:
-                #create group
+                #create group -> solve this option later
                 new_group = Group.objects.create(number=group_num)
                 Patrol.objects.create(name=patrol_name, group_num=new_group, secret=secret, group_leader=user)
             return redirect('home')
@@ -78,5 +77,4 @@ def setdata_view(request):
 @login_required(login_url='/accounts/login')
 def profile_view(request):
     data = Profile.objects.get(user=request.user)
-    form = forms.RegisterProfileData(initial={'group_num':data.group_num, 'patrol':data.patrol, 'secret':data.secret})
-    return render(request, 'accounts/viewdata.html', {'form': form})
+    return render(request, 'accounts/viewdata.html', {'group': data.group, 'patrol':data.patrol})
