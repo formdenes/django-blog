@@ -11,7 +11,7 @@ class Profile(models.Model):
     secret = models.CharField(max_length=30, default=None, blank=True, null=True)
 
     def __str__(self):
-        return "%s" % (self.user.username)
+        return "%s (%s)" % (self.user.username, self.group.number)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, created, **kwargs):
