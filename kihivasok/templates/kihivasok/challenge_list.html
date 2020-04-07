@@ -12,11 +12,15 @@
             <div class="details">
                 <h4 class="ch-title">{{ch.name}}</h4>
                 <p class="ch-desc">{{ch.snippet}}</p>
-                <p class="ch-tags">
+                <div class="ch-tags">
                     {% for t in ch.tags.all %}
-                        <span class="ch-tag">#{{t}}</span>  
+                    <form action="{% url 'challenge:tagsearch'%}" method="post" class="tagform">
+                        {% csrf_token %}
+                        <input type="hidden" name="search_text" value="{{t}}">
+                        <button type="submit" class="tagbutton"><span class="ch-tag">#{{t}}</span></button>
+                    </form>
                     {% endfor %}
-                </p>
+                </div>
                 <p class="ch-author">Kihívást létrehozta: <em>{{ch.created_by}}</em></p>
             </div>
             {% if user.is_authenticated %}
