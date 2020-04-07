@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Challenge, NewsPost
+from accounts.models import Profile
 from ors.models import Patrol, PatrolChallenge
 from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
@@ -51,6 +52,8 @@ def challenge_create(request):
             #save article to db
             instance = form.save(commit=False)
             instance.created_by = request.user
+            creator = Profile.objects.get(user=request.user)
+            instance.creator = creator
             instance.save()
             form.save_m2m()
             return redirect('challenge:challengelist')

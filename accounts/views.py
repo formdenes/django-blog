@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
+from .forms import RegisterProfileData
 
 # Create your views here.
 def signup_view(request):
@@ -34,3 +35,8 @@ def logout_view(request):
     if request.method == 'POST':
         logout(request)
         return redirect('home')
+
+def setdata_view(request):
+    form = forms.RegisterProfileData()
+    #todo craete template, post-get
+    return redirect('index')

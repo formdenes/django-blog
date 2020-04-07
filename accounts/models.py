@@ -6,7 +6,8 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    group_num = models.IntegerField(blank=True, null=True)
+    group_num = models.IntegerField(default=1)
+    patrol = models.CharField(max_length=50, default="Alma")
 
     def __str__(self):
         return "%s (%s)" % (self.user.username , self.group_num)
