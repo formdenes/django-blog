@@ -5,6 +5,7 @@ from ors.models import Patrol, PatrolChallenge
 from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
+from oauth2_provider.views.generic import ProtectedResourceView
 from . import forms
 from .forms import AddChallengeToPatrol
 from django.db.models.functions import Lower
@@ -146,7 +147,7 @@ def tag_search(request):
         results = Challenge.objects.filter(tags__name__in=tags).distinct()
         return render(request, 'search_challenge.html', {'form_search':tag_form, 'results':results})
     else:
-        return redirect('index')
+        return redirect('home')
 
 def index(request):
     actual_news = NewsPost.objects.filter(actual=True).order_by('-timestamp')
@@ -186,4 +187,10 @@ def index(request):
     else:
         return render(request, 'kihivasok/index.html', {'actual_news':actual_news, 'latest_challenges':latest_challenges, 'top_challenges':top_challenges})
 
+class ProtectedEndPoint(ProtectedResourceView):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponse('Hello, there dear "%s"!'% (request.user))
+        else:
+            return HttpResponse('Sorry, I don\'t recognize you!')
 
