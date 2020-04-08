@@ -7,6 +7,45 @@ from django.conf import settings
 from kihivasok import views as kihivasok_views
 import oauth2_provider.views as oauth2_views
 from ors import views as ors_views
+#imports for oauth2 authentication
+from django.contrib.auth.models import User, Group
+from django.contrib import admin
+admin.autodiscover()
+
+from rest_framework import generics, permissions, serializers
+
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
+
+#define serializers
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('name',)
+
+#create API views
+class UserList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetails(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class GroupList(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    required_scopes = ['groups']
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
 
 #OAuth2 provider endpoints
 oauth2_endpoint_views = [
@@ -50,6 +89,9 @@ urlpatterns = [
     #OAuth2 endpoints:
     path('api/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('api/hello/', kihivasok_views.ProtectedEndPoint.as_view()),
+    path('admin/users/', UserList.as_view()),
+    path('admin/users/<pk>/', UserDetails.as_view()),
+    path('admin/groups/', GroupList.as_view()),
     #default url
     path('',kihivasok_views.index, name='home')
 ]
