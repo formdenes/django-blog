@@ -1,0 +1,13 @@
+{% extends 'base_layout.html' %} 
+{% block content %}
+<h2>Login with Google</h2>
+
+{% load socialaccount %} 
+{% if user.is_authenticated %}
+    <p>Hello, {{ user.username }} !</p>
+
+{% else %}
+<h1>My Google Login Project</h1>
+<a href="{% provider_login_url 'google' %}">Bejelentkezem Google-fiókkal</a>
+{% endif %} 
+{% endblock %}
