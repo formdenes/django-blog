@@ -18,39 +18,76 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <h1><a href="{% url 'home'%}"><img src="{% static 'logo.png' %}" alt="logo" id="page-logo"></a></h1>
-        <nav>
-            <ul>
-                {% if user.is_authenticated %}
-                <li>
-                    <form action="{% url 'accounts:logout' %}" class="logout-link" method="POST">
-                        {% csrf_token %}
-                        <button class="logout" type="submit">Kijelentkezés</button>
-                    </form>
-                </li>
-                <li><a href="{% url 'search'%}">Keresés</a></li>
-                <li><a href="{% url 'challenge:list'%}">Minden kihívás</a></li>
-                <li><a href="{%url 'ors:mypatrol'%}">Őrsöm</a></li>
-                <li><a href="{%url 'ors:editcollection'%}">Őrsi gyűjtemény szerkesztése</a></li>
-                <li><a href="{%url 'ors:csapatok'%}">Csapatok</a></li>
-                <li><a href="{% url 'status'%}">Őrsöm gyűjteménye</a></li>
-                <li><a href="{%url 'challenge:create'%}">Új Kihívás!</a></li>
-                <li><a href="{%url 'challenge:mylist'%}">Saját kihívásaim</a></li>
-                <li><a href="{%url 'accounts:profile'%}">Profilom</a></li>
-                {% else %}
-                <li><a href="{% url 'accounts:login'%}">Bejelentkezem</a></li>
-                <li><a href="{% url 'accounts:signup'%}">Regisztrálok</a></li>
-                <li><a href="{% url 'search'%}">Keresés</a></li>
-                <li><a href="{% url 'challenge:list'%}">Minden kihívás</a></li>
-                <li><a href="{%url 'ors:csapatok'%}">Csapatok</a></li>
-                <li><a href="{% url 'status'%}">Őrsöm gyűjteménye</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+    <header class="navbar-wrapper navbar-boxed navbar-sticky">
+        <div class="container-fluid">
+            <div class="d-table-cell align-middle pr-md-3">
+                <a class="navbar-brand mr-1" href="{% url 'home'%}">
+                    <img class="head-logo my-1" src="{% static 'logo.png' %}" alt="Kihívások Cserkészeknek"/>
+                </a>
+            </div>
+            <div class="d-table-cell w-100 align-middle pl-md-3">
+            <!--top menu-->
+                <div class="navbar-top d-none d-lg-flex justify-content-end">
+                    <ul class="list-inline mb-0">
+                        <li class="dropdown-toggle mr-2">
+                            <a href="#" class="navbar-link">Bejelentkezés</a>
+                            <div class="dropdown-menu right-aligned p-3 text-center">
+                                {% if user.is_authenticated %}
+                                <form action="{% url 'accounts:logout' %}" class="logout-link" method="POST">
+                                    {% csrf_token %}
+                                    <button class="logout" type="submit">Kijelentkezés</button>
+                                </form>
+                                {% else %}
+                                <p class="text-sm opacity-70"><a href="{% url 'accounts:login'%}">Bejelentkezem</a></p>
+                                <p class="text-sm opacity-70"><a href="{% url 'accounts:signup'%}">Regisztrálok</a></p>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><a href="{%url 'accounts:profile'%}" class="nav-link">Profilom</a></li>
+                        {% endif %}
+                    </ul>
+                </div> 
+            <!--top menu end-->
+            <!--bottom menu-->
+            <div class="navbar justify-content-end justify-content-lg-between">
+                <ul class="navbar-nav d-none d-lg-block">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown-toggle">
+                        <a href="#" class="nav-link">Őrs</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="{%url 'ors:mypatrol'%}">Őrsöm</a></li>
+                            <li class="dropdown-item"><a href="{%url 'ors:editcollection'%}">Őrsi gyűjtemény szerkesztése</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown-toggle">
+                        <a href="#" class="nav-link">Kihívások</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="{%url 'challenge:create'%}">Új Kihívás!</a></li>
+                            <li class="dropdown-item"><a href="{%url 'challenge:mylist'%}">Saját kihívásaim</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'challenge:list'%}">Minden kihívás</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{%url 'ors:csapatok'%}">Csapatok</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'status'%}">Őrsöm gyűjteménye</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'search'%}">Keresés</a></li>
+                </ul>
+                <!-- <div>
+                    <ul class="navbar-buttons d-inline-block align-middle">
+                        <li class="d-block"><a href="{% url 'search'%}">Search</a></li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+    </header>
+    <section class="content">
         {% block content %}
         {% endblock %}
-    </div>
+    </section>
+    <section class="footer">
+        <!--TODO-->
+    </section>
 </body>
 <script src="{% static 'vendor.min.js'%}"></script>
 <script src="{% static 'theme.min.js'%}"></script>

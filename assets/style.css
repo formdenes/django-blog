@@ -9,8 +9,6 @@ body {
     background-image: url(bg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    padding-left: 1rem;
-    padding-top: 1rem;
     overflow: auto;
 }
 
@@ -25,7 +23,6 @@ h1, h2, h3, h4, h5 {
 
 a, a:hover, a:visited {
     text-decoration: none;
-    color: white;
 }
 
 .row {
@@ -321,4 +318,10 @@ section h2 {
     font-weight: bold;
     border-radius: 10px;
     padding: 1rem;
+}
+
+/* newly created css for theme overwrite */
+.head-logo{
+    width: 80px !important;
+    height: 80px !important;
 }
